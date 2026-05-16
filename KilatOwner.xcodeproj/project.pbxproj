@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1365763B4C2B1F7651FCDB20 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0130A9EBB0B042B81F7BB00 /* HomeViewModel.swift */; };
 		33C4E9BB2D432ED0E67853C0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E49A34BFF6B1E6D8D2BA50C /* SplashView.swift */; };
 		3E99C5AB41B02332BA41F34B /* BookingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D05F1798C164AC4FF87C2A /* BookingModels.swift */; };
 		406B95FCAF26EF5BA7F3EC5D /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44EB8B8AECE1DFD5E2C909 /* SplashViewModel.swift */; };
@@ -126,6 +127,7 @@
 		B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000003 /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
 		B4DB5B5FFD1F8BFBEFC6E558 /* APIEndpointTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIEndpointTests.swift; sourceTree = "<group>"; };
+		C0130A9EBB0B042B81F7BB00 /* HomeViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		C100000000000000C1000001 /* TrackingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingModels.swift; sourceTree = "<group>"; };
 		C100000000000000C1000003 /* TrackingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingRepository.swift; sourceTree = "<group>"; };
 		C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewModel.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				7221E0E9E158A98FBA46E2E3 /* HomeView.swift */,
+				C0130A9EBB0B042B81F7BB00 /* HomeViewModel.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				6B5020F66912914ED7D824FB /* RegisterView.swift in Sources */,
 				BFC12E1496154E8C14366895 /* RegisterViewModel.swift in Sources */,
 				6382A73F7CB99E2086EE2601 /* HomeView.swift in Sources */,
+				1365763B4C2B1F7651FCDB20 /* HomeViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

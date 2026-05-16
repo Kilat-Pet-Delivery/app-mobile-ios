@@ -26,8 +26,10 @@ struct RootView: View {
 }
 
 private struct AuthenticatedRootView: View {
+    @Environment(AppSession.self) private var session
+
     var body: some View {
-        HomeView()
+        HomeView(viewModel: HomeViewModel(appSession: session))
     }
 }
 
