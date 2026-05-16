@@ -115,6 +115,10 @@ final class APIClient {
     }
 
     private static func makeDecoder() -> JSONDecoder {
+        makeDecoderForFeatures()
+    }
+
+    static func makeDecoderForFeatures() -> JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         decoder.dateDecodingStrategy = .iso8601

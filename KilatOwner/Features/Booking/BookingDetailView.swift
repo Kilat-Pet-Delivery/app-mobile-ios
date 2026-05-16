@@ -78,8 +78,15 @@ struct BookingDetailView: View {
             Text("Waiting for a runner.")
                 .foregroundStyle(.secondary)
         case .trackLive:
-            Button("Track Live") {}
-                .buttonStyle(.borderedProminent)
+            NavigationLink("Track Live") {
+                LiveTrackingView(
+                    viewModel: LiveTrackingViewModel(
+                        bookingId: viewModel.bookingId,
+                        appSession: session
+                    )
+                )
+            }
+            .buttonStyle(.borderedProminent)
         case .completed:
             Text("Delivery completed.")
                 .foregroundStyle(.green)

@@ -16,6 +16,7 @@
 		406B95FCAF26EF5BA7F3EC5D /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44EB8B8AECE1DFD5E2C909 /* SplashViewModel.swift */; };
 		461613567790D46088AAB080 /* BookingCreateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44B4EF2F62703BAAE3EB9CB /* BookingCreateViewModel.swift */; };
 		549CA80D9B5C092776909EA8 /* APIEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DB5B5FFD1F8BFBEFC6E558 /* APIEndpointTests.swift */; };
+		56DBC5F221F9656F3B265710 /* LiveTrackingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8C7D48E5282F62779560B7 /* LiveTrackingViewModel.swift */; };
 		5AEE94DC9F1BAB273A74669D /* BookingCreateModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48792A6FDC2F12947098F51 /* BookingCreateModels.swift */; };
 		5C79070503951116272DDBC9 /* BookingCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A95A7B9B89E9A6CD5D95C6 /* BookingCreateView.swift */; };
 		5CE36A5B86F166AB8F2404FA /* BookingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */; };
@@ -68,6 +69,7 @@
 		C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */; };
 		C461096F8BEEA6E7161A5510 /* PetShopModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DFD7364550C148D1FBFCFF /* PetShopModels.swift */; };
 		C87AC50FCFB5974A4947F5CD /* PetShopDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5A857F85A629201063651F /* PetShopDetailView.swift */; };
+		CF857E3024CA25663FE4B0B2 /* LiveTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D419A936A039115C7E3CD5 /* LiveTrackingView.swift */; };
 		D0F7DC4C57291B69BD518BB9 /* PaymentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4923A77AC78DAE8EC083DB2 /* PaymentModels.swift */; };
 		D100000000000000D1000002 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000001 /* LocationManager.swift */; };
 		D100000000000000D1000004 /* WaypointBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000003 /* WaypointBuffer.swift */; };
@@ -97,7 +99,9 @@
 
 /* Begin PBXFileReference section */
 		0E49A34BFF6B1E6D8D2BA50C /* SplashView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		1D8C7D48E5282F62779560B7 /* LiveTrackingViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LiveTrackingViewModel.swift; sourceTree = "<group>"; };
 		1DC99F6BE2535B73B50DD8FF /* PetShopListViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetShopListViewModel.swift; sourceTree = "<group>"; };
+		31D419A936A039115C7E3CD5 /* LiveTrackingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LiveTrackingView.swift; sourceTree = "<group>"; };
 		34A95A7B9B89E9A6CD5D95C6 /* BookingCreateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingCreateView.swift; sourceTree = "<group>"; };
 		3D44EB8B8AECE1DFD5E2C909 /* SplashViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		3D5A857F85A629201063651F /* PetShopDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetShopDetailView.swift; sourceTree = "<group>"; };
@@ -221,6 +225,15 @@
 				DBA858633F6A56774492665E /* SafariCoordinator.swift */,
 			);
 			name = Payment;
+			sourceTree = "<group>";
+		};
+		75BC594DA427A06477014689 /* Tracking */ = {
+			isa = PBXGroup;
+			children = (
+				1D8C7D48E5282F62779560B7 /* LiveTrackingViewModel.swift */,
+				31D419A936A039115C7E3CD5 /* LiveTrackingView.swift */,
+			);
+			name = Tracking;
 			sourceTree = "<group>";
 		};
 		762DD9FBC726E88A63053ACB /* Booking */ = {
@@ -352,6 +365,7 @@
 				FE7FC184B19A9CFB0E665F37 /* PetShop */,
 				762DD9FBC726E88A63053ACB /* Booking */,
 				2972C2134A1F4EFECF0EF0DD /* Payment */,
+				75BC594DA427A06477014689 /* Tracking */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -649,6 +663,8 @@
 				D555145418B1F9DA9118E180 /* PaymentRepository.swift in Sources */,
 				7F2337B29C54FCD27A0250AB /* PaymentInitiateViewModel.swift in Sources */,
 				3DC4726C4990561FAF182AF3 /* PaymentInitiateView.swift in Sources */,
+				56DBC5F221F9656F3B265710 /* LiveTrackingViewModel.swift in Sources */,
+				CF857E3024CA25663FE4B0B2 /* LiveTrackingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
