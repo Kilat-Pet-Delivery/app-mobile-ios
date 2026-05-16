@@ -1,7 +1,9 @@
 import SwiftUI
 
 struct BookingDetailView: View {
+    @Environment(AppSession.self) private var session
     @Bindable private var viewModel: BookingDetailViewModel
+    @State private var showingPayment = false
 
     init(viewModel: BookingDetailViewModel) {
         self.viewModel = viewModel
@@ -29,6 +31,16 @@ struct BookingDetailView: View {
         }
         .task {
             await viewModel.onAppear()
+        }
+        .sheet(isPresented: $showingPayment) {
+            if let booking = viewModel.booking {
+                PaymentInitiateView(
+                    booking: booking,
+                    customerEmail: session.currentUser?.email ?? "owner@kilat.my"
+                ) {
+                    await viewModel.refresh()
+                }
+            }
         }
     }
 
@@ -58,7 +70,9 @@ struct BookingDetailView: View {
     private var primaryActionButton: some View {
         switch viewModel.primaryAction {
         case .pay:
-            Button("Pay Now") {}
+            Button("Pay Now") {
+                showingPayment = true
+            }
                 .buttonStyle(.borderedProminent)
         case .waiting:
             Text("Waiting for a runner.")

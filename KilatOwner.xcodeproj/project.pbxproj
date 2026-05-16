@@ -11,6 +11,7 @@
 		24F4E5A1FBDD423C72A91D7E /* PetShopListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC99F6BE2535B73B50DD8FF /* PetShopListViewModel.swift */; };
 		334957DF2274EDC426FFFB2B /* PetShopListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B487F987B7EDA80F0668F642 /* PetShopListView.swift */; };
 		33C4E9BB2D432ED0E67853C0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E49A34BFF6B1E6D8D2BA50C /* SplashView.swift */; };
+		3DC4726C4990561FAF182AF3 /* PaymentInitiateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5D5248A8FA4768841E8101 /* PaymentInitiateView.swift */; };
 		3E99C5AB41B02332BA41F34B /* BookingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D05F1798C164AC4FF87C2A /* BookingModels.swift */; };
 		406B95FCAF26EF5BA7F3EC5D /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44EB8B8AECE1DFD5E2C909 /* SplashViewModel.swift */; };
 		461613567790D46088AAB080 /* BookingCreateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44B4EF2F62703BAAE3EB9CB /* BookingCreateViewModel.swift */; };
@@ -21,6 +22,7 @@
 		5F805381195406A2483BF5B9 /* PetShopRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ED08DD12489108CF0316AD /* PetShopRepository.swift */; };
 		6382A73F7CB99E2086EE2601 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7221E0E9E158A98FBA46E2E3 /* HomeView.swift */; };
 		6B5020F66912914ED7D824FB /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D25CC533D9D6530801B04B /* RegisterView.swift */; };
+		7F2337B29C54FCD27A0250AB /* PaymentInitiateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FF24503D7E1878840C4EFD /* PaymentInitiateViewModel.swift */; };
 		A00000000000000000000011 /* KilatOwnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000001 /* KilatOwnerApp.swift */; };
 		A00000000000000000000012 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000002 /* AppEnvironment.swift */; };
 		A00000000000000000000013 /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000003 /* AppSession.swift */; };
@@ -66,9 +68,11 @@
 		C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */; };
 		C461096F8BEEA6E7161A5510 /* PetShopModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DFD7364550C148D1FBFCFF /* PetShopModels.swift */; };
 		C87AC50FCFB5974A4947F5CD /* PetShopDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5A857F85A629201063651F /* PetShopDetailView.swift */; };
+		D0F7DC4C57291B69BD518BB9 /* PaymentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4923A77AC78DAE8EC083DB2 /* PaymentModels.swift */; };
 		D100000000000000D1000002 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000001 /* LocationManager.swift */; };
 		D100000000000000D1000004 /* WaypointBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000003 /* WaypointBuffer.swift */; };
 		D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200000000000000D2000001 /* WaypointBufferTests.swift */; };
+		D555145418B1F9DA9118E180 /* PaymentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6994F1787ABF9585889F039E /* PaymentRepository.swift */; };
 		DB095217962F9A0A47957E6A /* BookingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80705C0875BC5231B538FDFF /* BookingRepository.swift */; };
 		E100000000000000E1000002 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100000000000000E1000001 /* WebSocketClient.swift */; };
 		E200000000000000E2000002 /* WebSocketClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000000000000E2000001 /* WebSocketClientTests.swift */; };
@@ -78,6 +82,7 @@
 		F100000000000000F1000004 /* EarningsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000000000000F1000003 /* EarningsRepository.swift */; };
 		F100000000000000F1000006 /* EarningsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000000000000F1000005 /* EarningsViewModel.swift */; };
 		F100000000000000F1000008 /* EarningsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000000000000F1000007 /* EarningsView.swift */; };
+		F5CB6D96531B6B12B2CD23A0 /* SafariCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA858633F6A56774492665E /* SafariCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,7 +102,9 @@
 		3D44EB8B8AECE1DFD5E2C909 /* SplashViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		3D5A857F85A629201063651F /* PetShopDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetShopDetailView.swift; sourceTree = "<group>"; };
 		48D05F1798C164AC4FF87C2A /* BookingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingModels.swift; sourceTree = "<group>"; };
+		6994F1787ABF9585889F039E /* PaymentRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaymentRepository.swift; sourceTree = "<group>"; };
 		7221E0E9E158A98FBA46E2E3 /* HomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		7B5D5248A8FA4768841E8101 /* PaymentInitiateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaymentInitiateView.swift; sourceTree = "<group>"; };
 		80705C0875BC5231B538FDFF /* BookingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingRepository.swift; sourceTree = "<group>"; };
 		90016E14C2DEE9502DEDE2FC /* BookingDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingDetailView.swift; sourceTree = "<group>"; };
 		99D25CC533D9D6530801B04B /* RegisterView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
@@ -137,6 +144,7 @@
 		A0000000000000000000013E /* PermissionRationaleSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRationaleSheet.swift; sourceTree = "<group>"; };
 		A1DFD7364550C148D1FBFCFF /* PetShopModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetShopModels.swift; sourceTree = "<group>"; };
 		A3887B3B228EFF86803FB6D9 /* BookingDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingDetailViewModel.swift; sourceTree = "<group>"; };
+		A4923A77AC78DAE8EC083DB2 /* PaymentModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaymentModels.swift; sourceTree = "<group>"; };
 		B100000000000000B1000001 /* AvailableJobsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModel.swift; sourceTree = "<group>"; };
 		B100000000000000B1000003 /* AvailableJobsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsView.swift; sourceTree = "<group>"; };
 		B100000000000000B1000005 /* JobDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModel.swift; sourceTree = "<group>"; };
@@ -158,6 +166,8 @@
 		D100000000000000D1000003 /* WaypointBuffer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBuffer.swift; sourceTree = "<group>"; };
 		D200000000000000D2000001 /* WaypointBufferTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBufferTests.swift; sourceTree = "<group>"; };
 		D5ED08DD12489108CF0316AD /* PetShopRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetShopRepository.swift; sourceTree = "<group>"; };
+		D5FF24503D7E1878840C4EFD /* PaymentInitiateViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaymentInitiateViewModel.swift; sourceTree = "<group>"; };
+		DBA858633F6A56774492665E /* SafariCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SafariCoordinator.swift; sourceTree = "<group>"; };
 		E100000000000000E1000001 /* WebSocketClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
 		E200000000000000E2000001 /* WebSocketClientTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClientTests.swift; sourceTree = "<group>"; };
 		F100000000000000F1000001 /* EarningsModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsModels.swift; sourceTree = "<group>"; };
@@ -192,6 +202,25 @@
 				C0130A9EBB0B042B81F7BB00 /* HomeViewModel.swift */,
 			);
 			name = Home;
+			sourceTree = "<group>";
+		};
+		2972C2134A1F4EFECF0EF0DD /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				A4923A77AC78DAE8EC083DB2 /* PaymentModels.swift */,
+				6994F1787ABF9585889F039E /* PaymentRepository.swift */,
+				D5FF24503D7E1878840C4EFD /* PaymentInitiateViewModel.swift */,
+				7B5D5248A8FA4768841E8101 /* PaymentInitiateView.swift */,
+			);
+			name = Payment;
+			sourceTree = "<group>";
+		};
+		2AF8E1DC01387869D73A04F4 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				DBA858633F6A56774492665E /* SafariCoordinator.swift */,
+			);
+			name = Payment;
 			sourceTree = "<group>";
 		};
 		762DD9FBC726E88A63053ACB /* Booking */ = {
@@ -272,6 +301,7 @@
 				A00000000000000000000122 /* Storage */,
 				D300000000000000D3000001 /* Location */,
 				E300000000000000E3000001 /* WebSocket */,
+				2AF8E1DC01387869D73A04F4 /* Payment */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -321,6 +351,7 @@
 				1EE07E2F614187831AEF6AF5 /* Home */,
 				FE7FC184B19A9CFB0E665F37 /* PetShop */,
 				762DD9FBC726E88A63053ACB /* Booking */,
+				2972C2134A1F4EFECF0EF0DD /* Payment */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -613,6 +644,11 @@
 				5C79070503951116272DDBC9 /* BookingCreateView.swift in Sources */,
 				BEE97C36A084B0CAC154B0DD /* BookingDetailViewModel.swift in Sources */,
 				EE7F83152E8502FAA187141C /* BookingDetailView.swift in Sources */,
+				F5CB6D96531B6B12B2CD23A0 /* SafariCoordinator.swift in Sources */,
+				D0F7DC4C57291B69BD518BB9 /* PaymentModels.swift in Sources */,
+				D555145418B1F9DA9118E180 /* PaymentRepository.swift in Sources */,
+				7F2337B29C54FCD27A0250AB /* PaymentInitiateViewModel.swift in Sources */,
+				3DC4726C4990561FAF182AF3 /* PaymentInitiateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
