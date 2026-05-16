@@ -16,14 +16,9 @@ final class PaymentInitiateViewModel {
     var pollingState: PaymentPollingState = .idle
 
     @ObservationIgnored private let paymentRepository: PaymentRepositoryProtocol
-    @ObservationIgnored private let bookingRepository: BookingRepositoryProtocol
 
-    init(
-        paymentRepository: PaymentRepositoryProtocol = PaymentRepository(),
-        bookingRepository: BookingRepositoryProtocol = BookingRepository()
-    ) {
+    init(paymentRepository: PaymentRepositoryProtocol = PaymentRepository()) {
         self.paymentRepository = paymentRepository
-        self.bookingRepository = bookingRepository
     }
 
     @MainActor
@@ -33,7 +28,7 @@ final class PaymentInitiateViewModel {
         defer { isInitiating = false }
 
         do {
-            redirectURL = try await paymentRepository.initiate(
+            let response = try await paymentRepository.initiate(
                 request: InitiatePaymentRequest(
                     bookingId: bookingId,
                     amountCents: amountCents,
@@ -41,6 +36,11 @@ final class PaymentInitiateViewModel {
                     customerEmail: email
                 )
             )
+            guard let url = response.redirectURL else {
+                errorMessage = "Payment unavailable — gateway did not return a redirect URL"
+                return
+            }
+            redirectURL = url
         } catch let error as NetworkError {
             errorMessage = error.userMessage
         } catch {
@@ -48,20 +48,23 @@ final class PaymentInitiateViewModel {
         }
     }
 
+    // Poll the payment aggregate (NOT the booking) — escrow_status transitions to `.held`
+    // once Stripe confirms the customer payment. The booking's own status stays `.requested`
+    // until a runner accepts.
     @MainActor
     func onSafariDismissed(bookingId: String) async {
         isPolling = true
         defer { isPolling = false }
 
         do {
-            let booking = try await bookingRepository.poll(
-                id: bookingId,
-                intervalSec: 2,
+            let payment = try await paymentRepository.pollEscrow(
+                bookingId: bookingId,
+                intervalSeconds: 2,
                 maxAttempts: 15
-            ) { booking in
-                booking.status != .awaitingPayment && booking.status != .requested
+            ) { payment in
+                payment.escrowStatus == .held
             }
-            pollingState = booking.status == .awaitingPayment || booking.status == .requested ? .timedOut : .success
+            pollingState = payment != nil ? .success : .timedOut
         } catch {
             pollingState = .timedOut
         }
