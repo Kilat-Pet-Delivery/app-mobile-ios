@@ -35,16 +35,42 @@ struct Booking: Decodable, Equatable, Identifiable {
     var distanceKm: Double? { routeSpec?.distanceKm }
 }
 
-enum BookingStatus: String, Decodable, Equatable {
-    case awaitingPayment = "awaiting_payment"
-    case awaitingRunner = "awaiting_runner"
-    case runnerAssigned = "runner_assigned"
+// Mirrors service-booking/internal/domain/booking/booking_status.go.
+// `.unknown(String)` keeps decode safe if the backend adds states
+// (the field schema allows a CancelledAt timestamp so a `cancelled` state may
+// surface in future — UI falls back to the rawValue text).
+enum BookingStatus: Decodable, Equatable {
     case requested
     case accepted
-    case inProgress = "in_progress"
+    case inProgress
     case delivered
-    case completed
-    case cancelled
+    case unknown(String)
+
+    init(rawValue: String) {
+        switch rawValue {
+        case "requested": self = .requested
+        case "accepted": self = .accepted
+        case "in_progress": self = .inProgress
+        case "delivered": self = .delivered
+        default: self = .unknown(rawValue)
+        }
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let raw = try container.decode(String.self)
+        self = .init(rawValue: raw)
+    }
+
+    var rawValue: String {
+        switch self {
+        case .requested: return "requested"
+        case .accepted: return "accepted"
+        case .inProgress: return "in_progress"
+        case .delivered: return "delivered"
+        case .unknown(let raw): return raw
+        }
+    }
 }
 
 extension Booking {

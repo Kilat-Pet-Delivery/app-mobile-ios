@@ -70,12 +70,21 @@ struct BookingDetailView: View {
     private var primaryActionButton: some View {
         switch viewModel.primaryAction {
         case .pay:
-            Button("Pay Now") {
-                showingPayment = true
-            }
+            Button("Pay Now") { showingPayment = true }
                 .buttonStyle(.borderedProminent)
-        case .waiting:
-            Text("Waiting for a runner.")
+        case .payFailed:
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Payment failed.")
+                    .font(.subheadline)
+                    .foregroundStyle(.red)
+                Button("Try again") { showingPayment = true }
+                    .buttonStyle(.borderedProminent)
+            }
+        case .waitingForRunner:
+            Text("Payment received. Waiting for a runner to accept.")
+                .foregroundStyle(.secondary)
+        case .waitingForPickup:
+            Text("Runner on the way to pick up your pet.")
                 .foregroundStyle(.secondary)
         case .trackLive:
             NavigationLink("Track Live") {
@@ -90,6 +99,12 @@ struct BookingDetailView: View {
         case .completed:
             Text("Delivery completed.")
                 .foregroundStyle(.green)
+        case .refunded:
+            Text("This booking was refunded.")
+                .foregroundStyle(.orange)
+        case .errorState:
+            Text("Payment status looks inconsistent — please contact support.")
+                .foregroundStyle(.red)
         case .none:
             EmptyView()
         }

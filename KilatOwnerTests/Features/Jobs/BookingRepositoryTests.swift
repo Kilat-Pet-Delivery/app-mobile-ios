@@ -128,13 +128,14 @@ final class BookingRepositoryTests: XCTestCase {
     }
 
     func test_bookingStatus_decodesAllCases() throws {
+        // Backend service-booking exposes 4 states. Unknown values decode safely to .unknown.
         let cases: [(json: String, expected: BookingStatus)] = [
             ("requested", .requested),
             ("accepted", .accepted),
             ("in_progress", .inProgress),
             ("delivered", .delivered),
-            ("completed", .completed),
-            ("cancelled", .cancelled)
+            ("completed", .unknown("completed")),
+            ("cancelled", .unknown("cancelled"))
         ]
         let decoder = JSONDecoder()
         for (raw, expected) in cases {

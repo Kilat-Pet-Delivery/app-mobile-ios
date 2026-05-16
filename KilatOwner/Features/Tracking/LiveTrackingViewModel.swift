@@ -105,7 +105,7 @@ final class LiveTrackingViewModel {
             }
         case let .status(event):
             status = event.newStatus
-            if event.newStatus == .delivered || event.newStatus == .completed {
+            if event.newStatus == .delivered {
                 completeAndDismiss()
             }
         }
@@ -116,7 +116,7 @@ final class LiveTrackingViewModel {
         pickupCoord = booking.pickupCoordinate
         dropoffCoord = booking.dropoffCoordinate
         status = booking.status
-        if booking.status == .delivered || booking.status == .completed {
+        if booking.status == .delivered {
             completeAndDismiss()
         }
     }
