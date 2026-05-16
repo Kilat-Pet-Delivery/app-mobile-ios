@@ -106,7 +106,7 @@ struct HomeView: View {
 
     private var browseButton: some View {
         NavigationLink {
-            Text("Pet shop browsing arrives in Phase 4.")
+            PetShopListView()
         } label: {
             Label("Browse Pet Shops", systemImage: "storefront.fill")
                 .font(.headline)

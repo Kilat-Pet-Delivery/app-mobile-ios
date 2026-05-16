@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		1365763B4C2B1F7651FCDB20 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0130A9EBB0B042B81F7BB00 /* HomeViewModel.swift */; };
+		24F4E5A1FBDD423C72A91D7E /* PetShopListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC99F6BE2535B73B50DD8FF /* PetShopListViewModel.swift */; };
+		334957DF2274EDC426FFFB2B /* PetShopListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B487F987B7EDA80F0668F642 /* PetShopListView.swift */; };
 		33C4E9BB2D432ED0E67853C0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E49A34BFF6B1E6D8D2BA50C /* SplashView.swift */; };
 		3E99C5AB41B02332BA41F34B /* BookingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D05F1798C164AC4FF87C2A /* BookingModels.swift */; };
 		406B95FCAF26EF5BA7F3EC5D /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44EB8B8AECE1DFD5E2C909 /* SplashViewModel.swift */; };
 		549CA80D9B5C092776909EA8 /* APIEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DB5B5FFD1F8BFBEFC6E558 /* APIEndpointTests.swift */; };
 		5CE36A5B86F166AB8F2404FA /* BookingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */; };
+		5F805381195406A2483BF5B9 /* PetShopRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ED08DD12489108CF0316AD /* PetShopRepository.swift */; };
 		6382A73F7CB99E2086EE2601 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7221E0E9E158A98FBA46E2E3 /* HomeView.swift */; };
 		6B5020F66912914ED7D824FB /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D25CC533D9D6530801B04B /* RegisterView.swift */; };
 		A00000000000000000000011 /* KilatOwnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000001 /* KilatOwnerApp.swift */; };
@@ -57,12 +60,15 @@
 		C100000000000000C1000008 /* ActiveDeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000007 /* ActiveDeliveryView.swift */; };
 		C200000000000000C2000002 /* TrackingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000001 /* TrackingRepositoryTests.swift */; };
 		C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */; };
+		C461096F8BEEA6E7161A5510 /* PetShopModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DFD7364550C148D1FBFCFF /* PetShopModels.swift */; };
+		C87AC50FCFB5974A4947F5CD /* PetShopDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5A857F85A629201063651F /* PetShopDetailView.swift */; };
 		D100000000000000D1000002 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000001 /* LocationManager.swift */; };
 		D100000000000000D1000004 /* WaypointBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000003 /* WaypointBuffer.swift */; };
 		D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200000000000000D2000001 /* WaypointBufferTests.swift */; };
 		DB095217962F9A0A47957E6A /* BookingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80705C0875BC5231B538FDFF /* BookingRepository.swift */; };
 		E100000000000000E1000002 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100000000000000E1000001 /* WebSocketClient.swift */; };
 		E200000000000000E2000002 /* WebSocketClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000000000000E2000001 /* WebSocketClientTests.swift */; };
+		E4FAB4369E22BAAEFF124F4A /* PetShopDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B127C549A0E9DEE1BA894F62 /* PetShopDetailViewModel.swift */; };
 		F100000000000000F1000002 /* EarningsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000000000000F1000001 /* EarningsModels.swift */; };
 		F100000000000000F1000004 /* EarningsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000000000000F1000003 /* EarningsRepository.swift */; };
 		F100000000000000F1000006 /* EarningsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000000000000F1000005 /* EarningsViewModel.swift */; };
@@ -81,7 +87,9 @@
 
 /* Begin PBXFileReference section */
 		0E49A34BFF6B1E6D8D2BA50C /* SplashView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		1DC99F6BE2535B73B50DD8FF /* PetShopListViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetShopListViewModel.swift; sourceTree = "<group>"; };
 		3D44EB8B8AECE1DFD5E2C909 /* SplashViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		3D5A857F85A629201063651F /* PetShopDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetShopDetailView.swift; sourceTree = "<group>"; };
 		48D05F1798C164AC4FF87C2A /* BookingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingModels.swift; sourceTree = "<group>"; };
 		7221E0E9E158A98FBA46E2E3 /* HomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		80705C0875BC5231B538FDFF /* BookingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingRepository.swift; sourceTree = "<group>"; };
@@ -120,12 +128,15 @@
 		A0000000000000000000013A /* DashboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModelTests.swift; sourceTree = "<group>"; };
 		A0000000000000000000013D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		A0000000000000000000013E /* PermissionRationaleSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRationaleSheet.swift; sourceTree = "<group>"; };
+		A1DFD7364550C148D1FBFCFF /* PetShopModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetShopModels.swift; sourceTree = "<group>"; };
 		B100000000000000B1000001 /* AvailableJobsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModel.swift; sourceTree = "<group>"; };
 		B100000000000000B1000003 /* AvailableJobsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsView.swift; sourceTree = "<group>"; };
 		B100000000000000B1000005 /* JobDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModel.swift; sourceTree = "<group>"; };
 		B100000000000000B1000007 /* JobDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
+		B127C549A0E9DEE1BA894F62 /* PetShopDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetShopDetailViewModel.swift; sourceTree = "<group>"; };
 		B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000003 /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
+		B487F987B7EDA80F0668F642 /* PetShopListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetShopListView.swift; sourceTree = "<group>"; };
 		B4DB5B5FFD1F8BFBEFC6E558 /* APIEndpointTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIEndpointTests.swift; sourceTree = "<group>"; };
 		C0130A9EBB0B042B81F7BB00 /* HomeViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		C100000000000000C1000001 /* TrackingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingModels.swift; sourceTree = "<group>"; };
@@ -137,6 +148,7 @@
 		D100000000000000D1000001 /* LocationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		D100000000000000D1000003 /* WaypointBuffer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBuffer.swift; sourceTree = "<group>"; };
 		D200000000000000D2000001 /* WaypointBufferTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBufferTests.swift; sourceTree = "<group>"; };
+		D5ED08DD12489108CF0316AD /* PetShopRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetShopRepository.swift; sourceTree = "<group>"; };
 		E100000000000000E1000001 /* WebSocketClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
 		E200000000000000E2000001 /* WebSocketClientTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClientTests.swift; sourceTree = "<group>"; };
 		F100000000000000F1000001 /* EarningsModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsModels.swift; sourceTree = "<group>"; };
@@ -285,6 +297,7 @@
 				C300000000000000C3000001 /* ActiveDelivery */,
 				F300000000000000F3000001 /* Earnings */,
 				1EE07E2F614187831AEF6AF5 /* Home */,
+				FE7FC184B19A9CFB0E665F37 /* PetShop */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -410,6 +423,19 @@
 				F100000000000000F1000007 /* EarningsView.swift */,
 			);
 			path = Earnings;
+			sourceTree = "<group>";
+		};
+		FE7FC184B19A9CFB0E665F37 /* PetShop */ = {
+			isa = PBXGroup;
+			children = (
+				A1DFD7364550C148D1FBFCFF /* PetShopModels.swift */,
+				D5ED08DD12489108CF0316AD /* PetShopRepository.swift */,
+				1DC99F6BE2535B73B50DD8FF /* PetShopListViewModel.swift */,
+				B487F987B7EDA80F0668F642 /* PetShopListView.swift */,
+				B127C549A0E9DEE1BA894F62 /* PetShopDetailViewModel.swift */,
+				3D5A857F85A629201063651F /* PetShopDetailView.swift */,
+			);
+			name = PetShop;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -553,6 +579,12 @@
 				BFC12E1496154E8C14366895 /* RegisterViewModel.swift in Sources */,
 				6382A73F7CB99E2086EE2601 /* HomeView.swift in Sources */,
 				1365763B4C2B1F7651FCDB20 /* HomeViewModel.swift in Sources */,
+				C461096F8BEEA6E7161A5510 /* PetShopModels.swift in Sources */,
+				5F805381195406A2483BF5B9 /* PetShopRepository.swift in Sources */,
+				24F4E5A1FBDD423C72A91D7E /* PetShopListViewModel.swift in Sources */,
+				334957DF2274EDC426FFFB2B /* PetShopListView.swift in Sources */,
+				E4FAB4369E22BAAEFF124F4A /* PetShopDetailViewModel.swift in Sources */,
+				C87AC50FCFB5974A4947F5CD /* PetShopDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
