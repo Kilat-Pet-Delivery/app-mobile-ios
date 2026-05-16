@@ -5,8 +5,18 @@ import Observation
 final class LoginViewModel {
     var email: String
     var password: String
-    private(set) var isSubmitting = false
+    private(set) var isLoading = false
     var errorMessage: String?
+
+    var isSubmitting: Bool {
+        isLoading
+    }
+
+    var canSubmit: Bool {
+        !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && !password.isEmpty
+            && !isLoading
+    }
 
     @ObservationIgnored private let authRepository: AuthRepositoryProtocol
     @ObservationIgnored private let appSession: AppSession
@@ -37,12 +47,12 @@ final class LoginViewModel {
             return
         }
 
-        isSubmitting = true
-        defer { isSubmitting = false }
+        isLoading = true
+        defer { isLoading = false }
 
         do {
-            _ = try await authRepository.login(email: email, password: password)
-            appSession.markAuthenticated()
+            let user = try await authRepository.login(email: email, password: password)
+            appSession.markAuthenticated(user: user)
         } catch let error as NetworkError {
             errorMessage = error.userMessage
         } catch {

@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33C4E9BB2D432ED0E67853C0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E49A34BFF6B1E6D8D2BA50C /* SplashView.swift */; };
 		3E99C5AB41B02332BA41F34B /* BookingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D05F1798C164AC4FF87C2A /* BookingModels.swift */; };
+		406B95FCAF26EF5BA7F3EC5D /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D44EB8B8AECE1DFD5E2C909 /* SplashViewModel.swift */; };
 		549CA80D9B5C092776909EA8 /* APIEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DB5B5FFD1F8BFBEFC6E558 /* APIEndpointTests.swift */; };
 		5CE36A5B86F166AB8F2404FA /* BookingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */; };
+		6382A73F7CB99E2086EE2601 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7221E0E9E158A98FBA46E2E3 /* HomeView.swift */; };
+		6B5020F66912914ED7D824FB /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D25CC533D9D6530801B04B /* RegisterView.swift */; };
 		A00000000000000000000011 /* KilatOwnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000001 /* KilatOwnerApp.swift */; };
 		A00000000000000000000012 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000002 /* AppEnvironment.swift */; };
 		A00000000000000000000013 /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000003 /* AppSession.swift */; };
@@ -45,6 +49,7 @@
 		B100000000000000B1000008 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000007 /* JobDetailView.swift */; };
 		B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */; };
 		B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000003 /* JobDetailViewModelTests.swift */; };
+		BFC12E1496154E8C14366895 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE9420B8FF84BDD35B5A0CC /* RegisterViewModel.swift */; };
 		C100000000000000C1000002 /* TrackingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000001 /* TrackingModels.swift */; };
 		C100000000000000C1000004 /* TrackingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000003 /* TrackingRepository.swift */; };
 		C100000000000000C1000006 /* ActiveDeliveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */; };
@@ -74,9 +79,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E49A34BFF6B1E6D8D2BA50C /* SplashView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		3D44EB8B8AECE1DFD5E2C909 /* SplashViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		48D05F1798C164AC4FF87C2A /* BookingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingModels.swift; sourceTree = "<group>"; };
+		7221E0E9E158A98FBA46E2E3 /* HomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		80705C0875BC5231B538FDFF /* BookingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingRepository.swift; sourceTree = "<group>"; };
+		99D25CC533D9D6530801B04B /* RegisterView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingRepositoryTests.swift; sourceTree = "<group>"; };
+		9AE9420B8FF84BDD35B5A0CC /* RegisterViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		A00000000000000000000001 /* KilatOwnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KilatOwnerApp.swift; sourceTree = "<group>"; };
 		A00000000000000000000002 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		A00000000000000000000003 /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
@@ -151,6 +161,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1EE07E2F614187831AEF6AF5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				7221E0E9E158A98FBA46E2E3 /* HomeView.swift */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
 		A00000000000000000000020 = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +281,7 @@
 				BC1C56524F3A90AAD1DED878 /* Jobs */,
 				C300000000000000C3000001 /* ActiveDelivery */,
 				F300000000000000F3000001 /* Earnings */,
+				1EE07E2F614187831AEF6AF5 /* Home */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -274,6 +293,10 @@
 				A0000000000000000000010C /* AuthRepository.swift */,
 				A0000000000000000000010E /* LoginViewModel.swift */,
 				A0000000000000000000012B /* LoginView.swift */,
+				0E49A34BFF6B1E6D8D2BA50C /* SplashView.swift */,
+				3D44EB8B8AECE1DFD5E2C909 /* SplashViewModel.swift */,
+				99D25CC533D9D6530801B04B /* RegisterView.swift */,
+				9AE9420B8FF84BDD35B5A0CC /* RegisterViewModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -521,6 +544,11 @@
 				F100000000000000F1000004 /* EarningsRepository.swift in Sources */,
 				F100000000000000F1000006 /* EarningsViewModel.swift in Sources */,
 				F100000000000000F1000008 /* EarningsView.swift in Sources */,
+				33C4E9BB2D432ED0E67853C0 /* SplashView.swift in Sources */,
+				406B95FCAF26EF5BA7F3EC5D /* SplashViewModel.swift in Sources */,
+				6B5020F66912914ED7D824FB /* RegisterView.swift in Sources */,
+				BFC12E1496154E8C14366895 /* RegisterViewModel.swift in Sources */,
+				6382A73F7CB99E2086EE2601 /* HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

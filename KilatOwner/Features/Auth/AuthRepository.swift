@@ -1,7 +1,27 @@
 import Foundation
 
 protocol AuthRepositoryProtocol {
-    func login(email: String, password: String) async throws -> AuthenticatedUser
+    func login(email: String, password: String) async throws -> User
+    func register(_ request: RegisterRequest) async throws -> User
+    func refresh() async throws
+    func me() async throws -> User
+    func logout()
+}
+
+extension AuthRepositoryProtocol {
+    func register(_ request: RegisterRequest) async throws -> User {
+        throw NetworkError.invalidResponse
+    }
+
+    func refresh() async throws {
+        throw NetworkError.unauthorized
+    }
+
+    func me() async throws -> User {
+        throw NetworkError.unauthorized
+    }
+
+    func logout() {}
 }
 
 final class AuthRepository: AuthRepositoryProtocol {
@@ -20,16 +40,17 @@ final class AuthRepository: AuthRepositoryProtocol {
         )
     }
 
-    func login(email: String, password: String) async throws -> AuthenticatedUser {
+    func login(email: String, password: String) async throws -> User {
         if ProcessInfo.processInfo.environment["KILAT_LOGIN_STUB"] != nil {
             try? tokenStore.saveAccessToken("stub-access-token")
             try? tokenStore.saveRefreshToken("stub-refresh-token")
-            return AuthenticatedUser(
+            return User(
                 id: "stub-user-id",
-                email: email.isEmpty ? "runner@kilat.my" : email,
+                email: email.isEmpty ? "owner@kilat.my" : email,
                 phone: "+60123456789",
-                fullName: "Stub Runner",
-                role: "runner",
+                firstName: "Stub",
+                lastName: "Owner",
+                role: "customer",
                 isVerified: true,
                 avatarURL: nil,
                 createdAt: Date()
@@ -45,5 +66,40 @@ final class AuthRepository: AuthRepositoryProtocol {
         try tokenStore.saveRefreshToken(envelope.data.refreshToken)
 
         return envelope.data.user
+    }
+
+    func register(_ request: RegisterRequest) async throws -> User {
+        let envelope: APIResponseEnvelope<AuthResponse> = try await authInterceptor.perform(
+            .register,
+            body: request
+        )
+
+        try tokenStore.saveAccessToken(envelope.data.accessToken)
+        try tokenStore.saveRefreshToken(envelope.data.refreshToken)
+
+        return envelope.data.user
+    }
+
+    func refresh() async throws {
+        guard let refreshToken = tokenStore.refreshToken() else {
+            throw NetworkError.unauthorized
+        }
+
+        let envelope: APIResponseEnvelope<AuthTokenPair> = try await authInterceptor.perform(
+            .refresh,
+            body: RefreshTokenRequest(refreshToken: refreshToken)
+        )
+
+        try tokenStore.saveAccessToken(envelope.data.accessToken)
+        try tokenStore.saveRefreshToken(envelope.data.refreshToken)
+    }
+
+    func me() async throws -> User {
+        let envelope: APIResponseEnvelope<User> = try await authInterceptor.perform(.me)
+        return envelope.data
+    }
+
+    func logout() {
+        tokenStore.clear()
     }
 }

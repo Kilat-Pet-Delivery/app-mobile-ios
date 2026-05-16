@@ -4,6 +4,7 @@ import Observation
 @Observable
 final class AppSession {
     enum State: Equatable {
+        case bootstrapping
         case unauthenticated
         case authenticated
     }
@@ -11,18 +12,35 @@ final class AppSession {
     @ObservationIgnored private let tokenStore: TokenStore
 
     var state: State
+    var isAuthenticated: Bool
+    var hasBootstrapped: Bool
+    var activeBookingId: String?
+    var currentUser: User?
 
     init(tokenStore: TokenStore = KeychainStore()) {
         self.tokenStore = tokenStore
-        state = tokenStore.accessToken() == nil ? .unauthenticated : .authenticated
+        state = .bootstrapping
+        isAuthenticated = false
+        hasBootstrapped = false
     }
 
-    func markAuthenticated() {
+    func markAuthenticated(user: User? = nil) {
+        currentUser = user
+        isAuthenticated = true
+        hasBootstrapped = true
         state = .authenticated
+    }
+
+    func markUnauthenticated() {
+        currentUser = nil
+        isAuthenticated = false
+        hasBootstrapped = true
+        state = .unauthenticated
     }
 
     func logout() {
         tokenStore.clear()
-        state = .unauthenticated
+        activeBookingId = nil
+        markUnauthenticated()
     }
 }

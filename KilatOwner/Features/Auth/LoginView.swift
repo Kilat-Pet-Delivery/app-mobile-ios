@@ -2,9 +2,11 @@ import SwiftUI
 
 struct LoginView: View {
     @Bindable private var viewModel: LoginViewModel
+    private let onRegister: () -> Void
 
-    init(viewModel: LoginViewModel) {
+    init(viewModel: LoginViewModel, onRegister: @escaping () -> Void = {}) {
         self.viewModel = viewModel
+        self.onRegister = onRegister
     }
 
     var body: some View {
@@ -55,18 +57,24 @@ struct LoginView: View {
                         Task { await viewModel.login() }
                     } label: {
                         HStack {
-                            if viewModel.isSubmitting {
+                            if viewModel.isLoading {
                                 ProgressView()
                                     .tint(.white)
                             }
-                            Text(viewModel.isSubmitting ? "Signing In" : "Sign In")
+                            Text(viewModel.isLoading ? "Signing In" : "Sign In")
                                 .fontWeight(.semibold)
                         }
                         .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
-                    .disabled(viewModel.isSubmitting)
+                    .disabled(!viewModel.canSubmit)
+
+                    Button("Create an account") {
+                        onRegister()
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.blue)
                 }
 
                 Spacer()
