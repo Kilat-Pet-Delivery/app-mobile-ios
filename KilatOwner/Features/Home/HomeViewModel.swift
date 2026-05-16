@@ -10,11 +10,11 @@ struct ActiveBookingSummary: Equatable, Identifiable {
 }
 
 protocol HomeBookingRepositoryProtocol {
-    func detail(id: String) async throws -> ActiveBookingSummary
+    func detail(id: String) async throws -> Booking
 }
 
 struct MissingBookingRepository: HomeBookingRepositoryProtocol {
-    func detail(id: String) async throws -> ActiveBookingSummary {
+    func detail(id: String) async throws -> Booking {
         throw NetworkError.invalidResponse
     }
 }
@@ -33,7 +33,7 @@ final class HomeViewModel {
     init(
         appSession: AppSession,
         authRepository: AuthRepositoryProtocol = AuthRepository(),
-        bookingRepository: HomeBookingRepositoryProtocol = MissingBookingRepository()
+        bookingRepository: HomeBookingRepositoryProtocol = BookingRepository()
     ) {
         self.appSession = appSession
         self.authRepository = authRepository
@@ -55,7 +55,8 @@ final class HomeViewModel {
         defer { isLoading = false }
 
         do {
-            activeBooking = try await bookingRepository.detail(id: bookingId)
+            let booking = try await bookingRepository.detail(id: bookingId)
+            activeBooking = ActiveBookingSummary(booking: booking)
         } catch let error as NetworkError {
             errorMessage = error.userMessage
         } catch {
@@ -66,5 +67,19 @@ final class HomeViewModel {
     func logout() {
         authRepository.logout()
         appSession.logout()
+    }
+}
+
+extension BookingRepository: HomeBookingRepositoryProtocol {}
+
+private extension ActiveBookingSummary {
+    init(booking: Booking) {
+        self.init(
+            id: booking.id,
+            status: booking.status.rawValue,
+            petName: booking.petSpec.name,
+            pickupAddress: booking.pickupAddress.singleLineLabel,
+            dropoffAddress: booking.dropoffAddress.singleLineLabel
+        )
     }
 }

@@ -36,12 +36,21 @@ struct Booking: Decodable, Equatable, Identifiable {
 }
 
 enum BookingStatus: String, Decodable, Equatable {
+    case awaitingPayment = "awaiting_payment"
+    case awaitingRunner = "awaiting_runner"
+    case runnerAssigned = "runner_assigned"
     case requested
     case accepted
     case inProgress = "in_progress"
     case delivered
     case completed
     case cancelled
+}
+
+extension Booking {
+    var amountCents: Int64 {
+        finalPriceCents ?? estimatedPriceCents
+    }
 }
 
 struct BookingAddress: Decodable, Equatable {

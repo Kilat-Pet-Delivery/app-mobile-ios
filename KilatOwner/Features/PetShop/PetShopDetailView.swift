@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct PetShopDetailView: View {
+    @Environment(AppSession.self) private var session
     @Bindable private var viewModel: PetShopDetailViewModel
 
     init(viewModel: PetShopDetailViewModel) {
@@ -17,7 +18,12 @@ struct PetShopDetailView: View {
                     header(shop)
                     serviceList
                     NavigationLink("Book Delivery") {
-                        Text("Booking Create coming Phase 5.")
+                        BookingCreateView(
+                            viewModel: BookingCreateViewModel(
+                                shopId: shop.id,
+                                appSession: session
+                            )
+                        )
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
