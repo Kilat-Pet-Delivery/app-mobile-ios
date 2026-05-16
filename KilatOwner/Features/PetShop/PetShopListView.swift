@@ -29,26 +29,13 @@ struct PetShopListView: View {
                     } label: {
                         PetShopRow(shop: shop)
                     }
-                    .onAppear {
-                        Task {
-                            await viewModel.loadMoreIfNeeded(currentShop: shop)
-                        }
-                    }
-                }
-
-                if viewModel.isLoadingMore {
-                    ProgressView()
-                        .frame(maxWidth: .infinity)
                 }
             }
         }
         .navigationTitle("Pet Shops")
         .searchable(text: $viewModel.searchText)
-        .onChange(of: viewModel.searchText) { _, newValue in
-            viewModel.search(text: newValue)
-        }
         .refreshable {
-            await viewModel.loadFirstPage()
+            await viewModel.reload()
         }
         .task {
             await viewModel.onAppear()

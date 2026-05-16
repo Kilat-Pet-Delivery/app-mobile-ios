@@ -2,6 +2,7 @@ import Foundation
 import XCTest
 @testable import KilatOwner
 
+@MainActor
 final class TrackingRepositoryTests: XCTestCase {
     private var tokenStore: TrackingRepoInMemoryTokenStore!
     private var repository: TrackingRepository!

@@ -205,7 +205,7 @@
 				7221E0E9E158A98FBA46E2E3 /* HomeView.swift */,
 				C0130A9EBB0B042B81F7BB00 /* HomeViewModel.swift */,
 			);
-			name = Home;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		2972C2134A1F4EFECF0EF0DD /* Payment */ = {
@@ -216,7 +216,7 @@
 				D5FF24503D7E1878840C4EFD /* PaymentInitiateViewModel.swift */,
 				7B5D5248A8FA4768841E8101 /* PaymentInitiateView.swift */,
 			);
-			name = Payment;
+			path = Payment;
 			sourceTree = "<group>";
 		};
 		2AF8E1DC01387869D73A04F4 /* Payment */ = {
@@ -224,7 +224,7 @@
 			children = (
 				DBA858633F6A56774492665E /* SafariCoordinator.swift */,
 			);
-			name = Payment;
+			path = Payment;
 			sourceTree = "<group>";
 		};
 		75BC594DA427A06477014689 /* Tracking */ = {
@@ -233,7 +233,7 @@
 				1D8C7D48E5282F62779560B7 /* LiveTrackingViewModel.swift */,
 				31D419A936A039115C7E3CD5 /* LiveTrackingView.swift */,
 			);
-			name = Tracking;
+			path = Tracking;
 			sourceTree = "<group>";
 		};
 		762DD9FBC726E88A63053ACB /* Booking */ = {
@@ -245,7 +245,7 @@
 				A3887B3B228EFF86803FB6D9 /* BookingDetailViewModel.swift */,
 				90016E14C2DEE9502DEDE2FC /* BookingDetailView.swift */,
 			);
-			name = Booking;
+			path = Booking;
 			sourceTree = "<group>";
 		};
 		A00000000000000000000020 = {
@@ -503,7 +503,7 @@
 				B127C549A0E9DEE1BA894F62 /* PetShopDetailViewModel.swift */,
 				3D5A857F85A629201063651F /* PetShopDetailView.swift */,
 			);
-			name = PetShop;
+			path = PetShop;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -21,17 +21,21 @@ final class LiveTrackingViewModel {
     @ObservationIgnored private var streamTask: Task<Void, Never>?
     @ObservationIgnored private var pollTask: Task<Void, Never>?
 
+    // TrackingRepository (which wraps WebSocketClient) is @MainActor; default-arg
+    // pattern doesn't bridge actor isolation, so use optional + nil-coalesce inside
+    // a @MainActor init body.
+    @MainActor
     init(
         bookingId: String,
         appSession: AppSession,
-        trackingRepository: TrackingRepositoryProtocol = TrackingRepository(),
-        bookingRepository: BookingRepositoryProtocol = BookingRepository(),
+        trackingRepository: TrackingRepositoryProtocol? = nil,
+        bookingRepository: BookingRepositoryProtocol? = nil,
         tokenStore: TokenStore = KeychainStore()
     ) {
         self.bookingId = bookingId
         self.appSession = appSession
-        self.trackingRepository = trackingRepository
-        self.bookingRepository = bookingRepository
+        self.trackingRepository = trackingRepository ?? TrackingRepository()
+        self.bookingRepository = bookingRepository ?? BookingRepository()
         self.tokenStore = tokenStore
     }
 

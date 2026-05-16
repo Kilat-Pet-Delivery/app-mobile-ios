@@ -5,18 +5,22 @@ protocol TrackingRepositoryProtocol {
     func subscribe(bookingId: String, token: String) async throws -> AsyncStream<TrackingEvent>
 }
 
+@MainActor
 final class TrackingRepository: TrackingRepositoryProtocol {
     private let authInterceptor: AuthInterceptor
     private let webSocketClient: RealtimeTrackingClient
     private let decoder: JSONDecoder
 
+    // WebSocketClient is @MainActor-isolated; the default-arg pattern doesn't work
+    // because Swift evaluates default args in the caller's actor context. Optional +
+    // nil-coalesce inside the @MainActor init body keeps the @MainActor requirement local.
     init(
         authInterceptor: AuthInterceptor,
-        webSocketClient: RealtimeTrackingClient = WebSocketClient(),
+        webSocketClient: RealtimeTrackingClient? = nil,
         decoder: JSONDecoder = APIClient.makeDecoderForFeatures()
     ) {
         self.authInterceptor = authInterceptor
-        self.webSocketClient = webSocketClient
+        self.webSocketClient = webSocketClient ?? WebSocketClient()
         self.decoder = decoder
     }
 
