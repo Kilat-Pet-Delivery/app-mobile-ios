@@ -6,13 +6,14 @@ enum APIEndpoint: Equatable {
     case refresh
     case logout
     case profile
-    case me
-    case petshopsList(page: Int = 1, query: String? = nil)
+    case petshopsList(category: String? = nil)
     case petshopDetail(id: String)
     case createBooking
     case initiatePayment
+    case paymentByBooking(bookingId: String)
 
-    // Legacy runner endpoints retained while the owner app is built phase-by-phase.
+    // Legacy runner endpoints — unused by the owner app, retained to keep runner-leftover files compiling.
+    // Remove once those files are cleaned up via the Xcode UI.
     case runnerMe
     case runnerOnline
     case runnerOffline
@@ -31,8 +32,8 @@ enum APIEndpoint: Equatable {
                 .runnerOnline, .runnerOffline, .runnerLocation,
                 .acceptBooking, .markPickup, .markDelivered:
             return .post
-        case .profile, .me, .petshopsList, .petshopDetail, .runnerMe, .availableJobs,
-                .bookingDetail, .trackingHistory, .earnings:
+        case .profile, .petshopsList, .petshopDetail, .paymentByBooking,
+                .runnerMe, .availableJobs, .bookingDetail, .trackingHistory, .earnings:
             return .get
         }
     }
@@ -49,8 +50,6 @@ enum APIEndpoint: Equatable {
             return "auth/logout"
         case .profile:
             return "auth/profile"
-        case .me:
-            return "auth/me"
         case .petshopsList:
             return "petshops"
         case let .petshopDetail(id):
@@ -59,6 +58,8 @@ enum APIEndpoint: Equatable {
             return "bookings"
         case .initiatePayment:
             return "payments/initiate"
+        case let .paymentByBooking(bookingId):
+            return "payments/booking/\(bookingId)"
         case .runnerMe:
             return "runners/me"
         case .runnerOnline:
@@ -87,14 +88,12 @@ enum APIEndpoint: Equatable {
 
     var queryItems: [URLQueryItem] {
         switch self {
-        case let .petshopsList(page, query):
-            var items = [
-                URLQueryItem(name: "page", value: String(page))
-            ]
-            if let query, !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                items.append(URLQueryItem(name: "query", value: query))
+        case let .petshopsList(category):
+            // Backend `GET /api/v1/petshops` accepts `category` query param (no pagination).
+            guard let category, !category.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                return []
             }
-            return items
+            return [URLQueryItem(name: "category", value: category)]
         case let .availableJobs(page, limit):
             return [
                 URLQueryItem(name: "status", value: "requested"),

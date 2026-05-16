@@ -3,84 +3,51 @@ import Observation
 
 @Observable
 final class PetShopListViewModel {
-    private(set) var shops: [PetShop] = []
+    private(set) var allShops: [PetShop] = []
     private(set) var isLoading = false
-    private(set) var isLoadingMore = false
     var errorMessage: String?
     var searchText = ""
-    private(set) var currentPage = 1
-    private(set) var hasMore = true
 
     @ObservationIgnored private let repository: PetShopRepositoryProtocol
-    @ObservationIgnored private let pageSize: Int
-    @ObservationIgnored private var searchTask: Task<Void, Never>?
 
-    init(repository: PetShopRepositoryProtocol = PetShopRepository(), pageSize: Int = 20) {
+    init(repository: PetShopRepositoryProtocol = PetShopRepository()) {
         self.repository = repository
-        self.pageSize = pageSize
+    }
+
+    // Backend returns all pet shops in a single list (no server-side pagination today).
+    // Search is in-memory across name/address/category.
+    var shops: [PetShop] {
+        let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        guard !trimmed.isEmpty else {
+            return allShops
+        }
+        return allShops.filter { shop in
+            shop.name.lowercased().contains(trimmed)
+                || shop.address.lowercased().contains(trimmed)
+                || shop.category.lowercased().contains(trimmed)
+        }
     }
 
     @MainActor
     func onAppear() async {
-        guard shops.isEmpty else {
+        guard allShops.isEmpty else {
             return
         }
-        await loadFirstPage()
+        await reload()
     }
 
     @MainActor
-    func loadFirstPage() async {
+    func reload() async {
         isLoading = true
         errorMessage = nil
-        currentPage = 1
         defer { isLoading = false }
 
         do {
-            let result = try await repository.list(page: currentPage, query: normalizedSearch)
-            shops = result
-            hasMore = result.count >= pageSize
+            allShops = try await repository.list(category: nil)
         } catch {
-            shops = []
-            hasMore = false
+            allShops = []
             errorMessage = message(for: error)
         }
-    }
-
-    @MainActor
-    func loadMoreIfNeeded(currentShop: PetShop) async {
-        guard currentShop.id == shops.last?.id, hasMore, !isLoadingMore, !isLoading else {
-            return
-        }
-
-        isLoadingMore = true
-        defer { isLoadingMore = false }
-
-        do {
-            let nextPage = currentPage + 1
-            let result = try await repository.list(page: nextPage, query: normalizedSearch)
-            currentPage = nextPage
-            shops.append(contentsOf: result)
-            hasMore = result.count >= pageSize
-        } catch {
-            errorMessage = message(for: error)
-        }
-    }
-
-    func search(text: String) {
-        searchText = text
-        searchTask?.cancel()
-        searchTask = Task { [weak self] in
-            try? await Task.sleep(for: .milliseconds(400))
-            guard !Task.isCancelled else {
-                return
-            }
-            await self?.loadFirstPage()
-        }
-    }
-
-    private var normalizedSearch: String? {
-        let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.isEmpty ? nil : trimmed
     }
 
     private func message(for error: Error) -> String {

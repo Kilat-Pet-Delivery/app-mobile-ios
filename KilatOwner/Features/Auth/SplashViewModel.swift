@@ -36,7 +36,7 @@ final class SplashViewModel {
         }
 
         do {
-            let user = try await authRepository.me()
+            let user = try await authRepository.profile()
             appSession.markAuthenticated(user: user)
         } catch NetworkError.unauthorized {
             await refreshAndLoadProfile()
@@ -50,7 +50,7 @@ final class SplashViewModel {
         do {
             message = "Refreshing your session"
             try await authRepository.refresh()
-            let user = try await authRepository.me()
+            let user = try await authRepository.profile()
             appSession.markAuthenticated(user: user)
         } catch {
             appSession.logout()

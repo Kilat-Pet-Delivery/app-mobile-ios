@@ -4,7 +4,7 @@ protocol AuthRepositoryProtocol {
     func login(email: String, password: String) async throws -> User
     func register(_ request: RegisterRequest) async throws -> User
     func refresh() async throws
-    func me() async throws -> User
+    func profile() async throws -> User
     func logout()
 }
 
@@ -17,7 +17,7 @@ extension AuthRepositoryProtocol {
         throw NetworkError.unauthorized
     }
 
-    func me() async throws -> User {
+    func profile() async throws -> User {
         throw NetworkError.unauthorized
     }
 
@@ -94,8 +94,8 @@ final class AuthRepository: AuthRepositoryProtocol {
         try tokenStore.saveRefreshToken(envelope.data.refreshToken)
     }
 
-    func me() async throws -> User {
-        let envelope: APIResponseEnvelope<User> = try await authInterceptor.perform(.me)
+    func profile() async throws -> User {
+        let envelope: APIResponseEnvelope<User> = try await authInterceptor.perform(.profile)
         return envelope.data
     }
 
