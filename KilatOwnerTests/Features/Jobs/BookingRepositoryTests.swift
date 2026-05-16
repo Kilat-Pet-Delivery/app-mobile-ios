@@ -244,3 +244,159 @@ private final class BookingRepoInMemoryTokenStore: TokenStore {
         storedRefreshToken = nil
     }
 }
+
+// MARK: - BookingDetailViewModel.derivePrimaryAction (spec rev-2 §6.6 table)
+
+final class BookingPrimaryActionTests: XCTestCase {
+    func test_nilBooking_returnsNone() {
+        XCTAssertEqual(
+            BookingDetailViewModel.derivePrimaryAction(booking: nil, payment: nil),
+            .none
+        )
+    }
+
+    func test_requestedWithNoPayment_isPay() {
+        let booking = Self.makeBooking(status: .requested)
+        XCTAssertEqual(
+            BookingDetailViewModel.derivePrimaryAction(booking: booking, payment: nil),
+            .pay
+        )
+    }
+
+    func test_requestedWithPendingPayment_isPay() {
+        let booking = Self.makeBooking(status: .requested)
+        let payment = Self.makePayment(escrow: .pending)
+        XCTAssertEqual(
+            BookingDetailViewModel.derivePrimaryAction(booking: booking, payment: payment),
+            .pay
+        )
+    }
+
+    func test_requestedWithFailedPayment_isPay() {
+        let booking = Self.makeBooking(status: .requested)
+        let payment = Self.makePayment(escrow: .failed)
+        XCTAssertEqual(
+            BookingDetailViewModel.derivePrimaryAction(booking: booking, payment: payment),
+            .pay
+        )
+    }
+
+    func test_requestedWithHeldPayment_isWaitingForRunner() {
+        let booking = Self.makeBooking(status: .requested)
+        let payment = Self.makePayment(escrow: .held)
+        XCTAssertEqual(
+            BookingDetailViewModel.derivePrimaryAction(booking: booking, payment: payment),
+            .waitingForRunner
+        )
+    }
+
+    func test_acceptedWithHeldPayment_isWaitingForPickup() {
+        let booking = Self.makeBooking(status: .accepted)
+        let payment = Self.makePayment(escrow: .held)
+        XCTAssertEqual(
+            BookingDetailViewModel.derivePrimaryAction(booking: booking, payment: payment),
+            .waitingForPickup
+        )
+    }
+
+    func test_acceptedWithoutHeldPayment_isErrorState() {
+        // Backend shouldn't transition to accepted before held, but if it does,
+        // surface as a banner rather than crashing or showing a misleading CTA.
+        let booking = Self.makeBooking(status: .accepted)
+        XCTAssertEqual(
+            BookingDetailViewModel.derivePrimaryAction(booking: booking, payment: nil),
+            .errorState
+        )
+    }
+
+    func test_inProgressWithHeldPayment_isTrackLive() {
+        let booking = Self.makeBooking(status: .inProgress)
+        let payment = Self.makePayment(escrow: .held)
+        XCTAssertEqual(
+            BookingDetailViewModel.derivePrimaryAction(booking: booking, payment: payment),
+            .trackLive
+        )
+    }
+
+    func test_deliveredWithHeldPayment_isCompleted() {
+        let booking = Self.makeBooking(status: .delivered)
+        let payment = Self.makePayment(escrow: .held)
+        XCTAssertEqual(
+            BookingDetailViewModel.derivePrimaryAction(booking: booking, payment: payment),
+            .completed
+        )
+    }
+
+    func test_deliveredWithReleasedPayment_isCompleted() {
+        let booking = Self.makeBooking(status: .delivered)
+        let payment = Self.makePayment(escrow: .released)
+        XCTAssertEqual(
+            BookingDetailViewModel.derivePrimaryAction(booking: booking, payment: payment),
+            .completed
+        )
+    }
+
+    func test_refundedPayment_alwaysWins() {
+        for status in [BookingStatus.requested, .accepted, .inProgress, .delivered] {
+            let booking = Self.makeBooking(status: status)
+            let payment = Self.makePayment(escrow: .refunded)
+            XCTAssertEqual(
+                BookingDetailViewModel.derivePrimaryAction(booking: booking, payment: payment),
+                .refunded,
+                "Refund should override status=\(status)"
+            )
+        }
+    }
+
+    func test_unknownStatus_returnsNone() {
+        let booking = Self.makeBooking(status: .unknown("cancelled"))
+        XCTAssertEqual(
+            BookingDetailViewModel.derivePrimaryAction(booking: booking, payment: nil),
+            .none
+        )
+    }
+
+    // MARK: - Fixtures
+
+    private static func makeBooking(status: BookingStatus) -> Booking {
+        let json = """
+        {
+          "id": "00000000-0000-0000-0000-000000000001",
+          "booking_number": "BK-TEST",
+          "owner_id": "00000000-0000-0000-0000-000000000002",
+          "runner_id": null,
+          "status": "\(status.rawValue)",
+          "pet_spec": {"pet_type": "dog", "name": "Rex", "weight_kg": 5},
+          "pickup_address": {"line1": "A", "line2": "", "city": "KL", "state": "KL", "postal_code": "", "country": "MY", "latitude": 3.1, "longitude": 101.6},
+          "dropoff_address": {"line1": "B", "line2": "", "city": "PJ", "state": "Selangor", "postal_code": "", "country": "MY", "latitude": 3.0, "longitude": 101.5},
+          "estimated_price_cents": 2000,
+          "currency": "MYR",
+          "version": 1,
+          "created_at": "2026-05-16T10:00:00Z",
+          "updated_at": "2026-05-16T10:00:00Z"
+        }
+        """
+        let decoder = APIClient.makeDecoderForFeatures()
+        return try! decoder.decode(Booking.self, from: json.data(using: .utf8)!)
+    }
+
+    private static func makePayment(escrow: PaymentEscrowStatus) -> Payment {
+        let json = """
+        {
+          "id": "p-1",
+          "booking_id": "00000000-0000-0000-0000-000000000001",
+          "owner_id": "00000000-0000-0000-0000-000000000002",
+          "escrow_status": "\(escrow.rawValue)",
+          "amount_cents": 2000,
+          "platform_fee_cents": 200,
+          "runner_payout_cents": 1800,
+          "currency": "MYR",
+          "version": 1,
+          "created_at": "2026-05-16T10:00:00Z",
+          "updated_at": "2026-05-16T10:00:00Z"
+        }
+        """
+        let decoder = APIClient.makeDecoderForFeatures()
+        return try! decoder.decode(Payment.self, from: json.data(using: .utf8)!)
+    }
+}

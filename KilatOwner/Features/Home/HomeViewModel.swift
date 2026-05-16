@@ -64,8 +64,9 @@ final class HomeViewModel {
         }
     }
 
-    func logout() {
-        authRepository.logout()
+    @MainActor
+    func logout() async {
+        await authRepository.logout()
         appSession.logout()
     }
 }

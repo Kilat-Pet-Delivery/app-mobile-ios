@@ -36,7 +36,7 @@ struct HomeView: View {
             .toolbar {
                 Menu {
                     Button("Logout", role: .destructive) {
-                        viewModel.logout()
+                        Task { await viewModel.logout() }
                     }
                 } label: {
                     Image(systemName: "person.crop.circle")

@@ -5,7 +5,7 @@ protocol AuthRepositoryProtocol {
     func register(_ request: RegisterRequest) async throws -> User
     func refresh() async throws
     func profile() async throws -> User
-    func logout()
+    func logout() async
 }
 
 extension AuthRepositoryProtocol {
@@ -21,8 +21,12 @@ extension AuthRepositoryProtocol {
         throw NetworkError.unauthorized
     }
 
-    func logout() {}
+    func logout() async {}
 }
+
+// Used to decode envelopes for endpoints that return no meaningful payload
+// (e.g. POST /auth/logout returns { success: true, data: null }).
+private struct EmptyDecodable: Decodable {}
 
 final class AuthRepository: AuthRepositoryProtocol {
     private let authInterceptor: AuthInterceptor
@@ -99,7 +103,11 @@ final class AuthRepository: AuthRepositoryProtocol {
         return envelope.data
     }
 
-    func logout() {
+    func logout() async {
+        // Best-effort server revocation — if the server call fails (offline,
+        // refresh already expired, etc.) we still clear local credentials so
+        // the user lands on Login.
+        let _: APIResponseEnvelope<EmptyDecodable>? = try? await authInterceptor.perform(.logout)
         tokenStore.clear()
     }
 }
