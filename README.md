@@ -21,6 +21,12 @@ Native iOS MVP for the Kilat pet-owner happy path: register, login, browse pet s
 
 Debug builds target `http://localhost:8080/api/v1` and `ws://localhost:8080`.
 
+## Running on Device
+
+`localhost` only works in the simulator. For a physical iPhone, update `KilatOwner/App/AppEnvironment.swift` in Debug to use the backend host's LAN IP, for example `http://192.168.1.20:8080`. Keep the matching WebSocket host reachable on the same network.
+
+The development login shortcut is gated behind the `KILAT_LOGIN_STUB` launch environment variable and is off by default.
+
 ## Documents
 
 - Spec: `../docs/superpowers/specs/2026-05-16-app-mobile-ios-mvp-design.md`

@@ -1,48 +1,36 @@
-# KilatOwner iOS Manual Smoke Checklist
+# Kilat Owner iOS Manual Smoke Checklist
 
-Use this checklist for the real-device MVP smoke. Run it on a physical iPhone with the local backend stack running.
+Use this checklist for the real-device MVP smoke. Run it on a physical iPhone with the backend gateway reachable from the device.
 
 ## Setup
 
-- Backend: from `../infrastructure`, run `make up` then `make seed`.
-- Runner account: `runner.test@kilat.my` / `TestRunner123!`.
-- Owner account: use the seeded owner account from the backend seed data or Bruno environment.
-- Device: iPhone on the same network as the backend host.
-- Xcode scheme: `KilatOwner`, Debug configuration.
-- API base URL: confirm `KilatOwner/App/AppEnvironment.swift` points to the reachable backend host for device testing.
-- Backend logs to watch:
-  - `service-booking` for booking state transitions.
-  - `service-runner` for `/runners/me/location`.
-  - `service-tracking` or gateway logs for WebSocket connection and reconnect events.
+- [ ] Backend stack is running from `../infrastructure`.
+- [ ] Gateway health passes at `/health`.
+- [ ] `KilatOwner/App/AppEnvironment.swift` points to the reachable backend host.
+- [ ] Xcode scheme is `KilatOwner`, Debug configuration.
+- [ ] Login stub remains off by default. `KILAT_LOGIN_STUB` is only used when deliberately added as a launch environment variable.
+- [ ] A runner account is available to accept and stream the delivery.
 
-## Seed A Fresh Booking
+## Happy Path
 
-Create a booking as the owner via Bruno or curl before starting the runner flow.
-
-Expected booking path:
-
-1. `POST /api/v1/bookings` creates a requested booking.
-2. Runner accepts it from the app.
-3. Pickup moves it to delivery in progress.
-4. Delivered moves it to the backend delivered or awaiting-confirmation state, depending on current service behavior.
-
-Record the booking ID here:
-
-- Booking ID:
-- Booking number:
-
-## Checklist
-
-- [ ] Login works on real iPhone with the seeded runner account.
-- [ ] Toggle online and confirm real available jobs appear from `service-booking`.
-- [ ] Accept the freshly created booking from the Available Jobs flow.
-- [ ] Active Delivery map shows runner location plus pickup and drop-off pins.
-- [ ] Walk with the phone locked or in pocket; backend `/runners/me/location` receives waypoint batches.
-- [ ] WebSocket connection is visible in backend logs, and the app recovers after a forced disconnect.
-- [ ] Tap Picked Up; backend booking state advances to `delivery_in_progress` or `in_progress`.
-- [ ] Tap Mark Delivered; backend booking state advances to delivered or awaiting confirmation.
-- [ ] Earnings screen lists the completed booking with payout amount.
-- [ ] App survives a 10-minute background session without crashing or losing GPS updates.
+- [ ] Clean install opens Splash, then routes to Login with no saved token.
+- [ ] Register creates a customer account and lands on Home.
+- [ ] Logout returns to Login.
+- [ ] Login with the same account lands on Home.
+- [ ] Browse Pet Shops opens the list and returns real pet shops.
+- [ ] Search/filter does not crash and keeps the list usable.
+- [ ] Pet shop detail loads services and contact details.
+- [ ] Book Delivery opens the booking form with the selected shop id.
+- [ ] Empty booking submit shows inline validation.
+- [ ] Valid booking submit creates a booking and sets it as active.
+- [ ] Booking Detail shows status, pet, addresses, schedule, and amount.
+- [ ] Pay Now opens the payment sheet/Safari flow.
+- [ ] Dismissing Safari polls the booking and refreshes status.
+- [ ] Runner accepts/picks up the booking from the runner app.
+- [ ] Track Live opens the map with pickup/dropoff pins.
+- [ ] Runner location updates move the runner pin and draw a route trail.
+- [ ] Delivered/completed status clears the active booking and dismisses tracking.
+- [ ] Relaunch preserves auth and routes correctly from Splash.
 
 ## Result Log
 
@@ -54,17 +42,17 @@ App commit:
 
 | Item | Result | Notes |
 | --- | --- | --- |
-| 1. Login | Not run | |
-| 2. Online + jobs | Not run | |
-| 3. Accept job | Not run | |
-| 4. Active delivery map | Not run | |
-| 5. Background waypoint upload | Not run | |
-| 6. WebSocket reconnect | Not run | |
-| 7. Pickup transition | Not run | |
-| 8. Delivered transition | Not run | |
-| 9. Earnings | Not run | |
-| 10. 10-minute background | Not run | |
+| Clean install routing | Not run | |
+| Register | Not run | |
+| Logout/Login | Not run | |
+| Pet shop list/detail | Not run | |
+| Booking create/detail | Not run | |
+| Payment flow | Not run | |
+| Live tracking | Not run | |
+| Delivery completion | Not run | |
+| Relaunch auth | Not run | |
 
-## Phase 10 Bug Backlog
+## Follow-Ups
 
-- None yet.
+- Real-device smoke not run in this coding pass.
+- Compile/tests intentionally not run per request.
