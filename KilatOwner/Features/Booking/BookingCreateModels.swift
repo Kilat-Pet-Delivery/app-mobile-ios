@@ -18,6 +18,12 @@ struct CreateBookingAddress: Encodable, Equatable {
     let country: String
     let latitude: Double
     let longitude: Double
+
+    var singleLineLabel: String {
+        [line1, line2, city, state, postalCode, country]
+            .filter { !$0.isEmpty }
+            .joined(separator: ", ")
+    }
 }
 
 struct CreateBookingRequest: Encodable, Equatable {

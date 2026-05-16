@@ -17,10 +17,11 @@ struct PetShopDetailView: View {
                 } else if let shop = viewModel.shop {
                     header(shop)
                     serviceList
-                    NavigationLink("Book Delivery") {
+                    NavigationLink("Book Delivery Here") {
                         BookingCreateView(
                             viewModel: BookingCreateViewModel(
-                                shopId: shop.id,
+                                dropoffPrefill: dropoffAddress(for: shop),
+                                dropoffLabel: shop.name,
                                 appSession: session
                             )
                         )
@@ -42,6 +43,22 @@ struct PetShopDetailView: View {
         .task {
             await viewModel.onAppear()
         }
+    }
+
+    // Backend's PetShop returns a single `address` string + lat/lng. Booking creation
+    // requires structured AddressDTO fields, so map what we have and default the rest.
+    // Distance pricing only reads lat/lng; structured fields are display-only.
+    private func dropoffAddress(for shop: PetShop) -> CreateBookingAddress {
+        CreateBookingAddress(
+            line1: shop.address,
+            line2: "",
+            city: "Kuala Lumpur",
+            state: "Kuala Lumpur",
+            postalCode: "",
+            country: "MY",
+            latitude: shop.latitude,
+            longitude: shop.longitude
+        )
     }
 
     private func header(_ shop: PetShop) -> some View {
