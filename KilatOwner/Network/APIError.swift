@@ -8,6 +8,7 @@ enum APIError: Error, Equatable {
     case invalidResponse
     case unauthorized
     case serverFailure(message: String)
+    case timeout(message: String)
 
     var userMessage: String {
         switch self {
@@ -24,6 +25,8 @@ enum APIError: Error, Equatable {
         case .unauthorized:
             return "Your session has expired. Please log in again."
         case let .serverFailure(message):
+            return message
+        case let .timeout(message):
             return message
         }
     }
