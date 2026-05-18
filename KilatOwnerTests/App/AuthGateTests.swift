@@ -57,6 +57,19 @@ final class AuthGateTests: XCTestCase {
         XCTAssertEqual(tokenStore.refreshToken(), "stub-refresh-token")
     }
 
+    func testAuthGate_start_setsInitialRouteAsRoot() async {
+        let tokenStore = InMemoryTokenStore(accessToken: "valid-access")
+        let session = AppSession()
+        let service = AuthGateServiceDouble(profileResult: .success(SampleData.ownerProfile))
+        let coordinator = RootCoordinator(path: [.signup])
+        let gate = makeGate(tokenStore: tokenStore, session: session, service: service)
+
+        await gate.start(coordinator: coordinator)
+
+        XCTAssertEqual(coordinator.rootRoute, .home)
+        XCTAssertTrue(coordinator.path.isEmpty)
+    }
+
     func testAuthGate_expiredToken_attemptsRefresh_thenRoutesAccordingly() async {
         let tokenStore = InMemoryTokenStore(accessToken: "old-access", refreshToken: "old-refresh")
         let session = AppSession()
@@ -97,7 +110,8 @@ final class AuthGateTests: XCTestCase {
         XCTAssertNil(session.profile)
         XCTAssertNil(session.accessToken)
         XCTAssertNil(session.activeBookingID)
-        XCTAssertEqual(coordinator.path, [.login])
+        XCTAssertEqual(coordinator.rootRoute, .login)
+        XCTAssertTrue(coordinator.path.isEmpty)
         XCTAssertEqual(gate.state, .unauthenticated)
     }
 

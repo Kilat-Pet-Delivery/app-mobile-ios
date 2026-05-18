@@ -121,8 +121,7 @@ final class AuthGate {
         hasStarted = true
 
         let route = await resolveInitialRoute()
-        coordinator.popToRoot()
-        coordinator.push(route)
+        coordinator.setRoot(route)
     }
 
     func resolveInitialRoute() async -> OwnerRoute {
@@ -142,8 +141,7 @@ final class AuthGate {
         session.clear()
         state = .unauthenticated
         hasStarted = true
-        coordinator.popToRoot()
-        coordinator.push(.login)
+        coordinator.setRoot(.login)
     }
 
     private func resolveAuthRoute() async -> OwnerRoute {

@@ -37,10 +37,18 @@ struct RootView: View {
         case .idle, .checking:
             SplashView()
         case .authenticated, .unauthenticated:
-            PlaceholderDashboardView(
-                useStubs: environment.useStubs,
-                coordinator: coordinator
-            )
+            if let rootRoute = coordinator.rootRoute {
+                RouteResolver.view(
+                    for: rootRoute,
+                    environment: environment,
+                    coordinator: coordinator
+                )
+            } else {
+                PlaceholderDashboardView(
+                    useStubs: environment.useStubs,
+                    coordinator: coordinator
+                )
+            }
         }
     }
 }

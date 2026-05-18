@@ -10,22 +10,24 @@ struct HomeView: View {
     ]
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Tokens.Space.xl) {
-                header
-                activeOrEmptySection
-                servicesSection
-                petsSection
-                recentTripsSection
+        GeometryReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: Tokens.Space.xl) {
+                    header
+                    activeOrEmptySection
+                    servicesSection
+                    petsSection
+                    recentTripsSection
+                }
+                .padding(.horizontal, Tokens.Space.lg)
+                .padding(.vertical, Tokens.Space.xxl)
+                .frame(width: min(proxy.size.width, 560), alignment: .leading)
+                .frame(maxWidth: .infinity)
             }
-            .padding(.horizontal, Tokens.Space.lg)
-            .padding(.vertical, Tokens.Space.xxl)
-            .frame(maxWidth: 560)
-            .frame(maxWidth: .infinity)
-        }
-        .background(Tokens.Color.background.ignoresSafeArea())
-        .task {
-            await viewModel.loadIfNeeded()
+            .background(Tokens.Color.background.ignoresSafeArea())
+            .task {
+                await viewModel.loadIfNeeded()
+            }
         }
     }
 

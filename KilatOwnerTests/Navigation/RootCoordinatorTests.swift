@@ -11,6 +11,15 @@ final class RootCoordinatorTests: XCTestCase {
         XCTAssertEqual(coordinator.path, [.bookingDetail(bookingID: "booking-1")])
     }
 
+    func testSetRoot_replacesRootRouteAndClearsPath() {
+        let coordinator = RootCoordinator(rootRoute: .login, path: [.signup, .welcome])
+
+        coordinator.setRoot(.home)
+
+        XCTAssertEqual(coordinator.rootRoute, .home)
+        XCTAssertTrue(coordinator.path.isEmpty)
+    }
+
     func testPop_removesLastRoute() {
         let coordinator = RootCoordinator()
         coordinator.push(.home)

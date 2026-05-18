@@ -30,16 +30,43 @@ struct ActiveBookingCard: View {
                     routeRow(icon: "flag.checkered.circle.fill", title: booking.dropoffAddress.line1)
                 }
 
-                HStack(spacing: Tokens.Space.sm) {
-                    summaryPill(icon: "clock.fill", text: booking.homeTimeLabel)
-                    summaryPill(icon: "creditcard.fill", text: booking.homePriceLabel)
-
-                    Spacer(minLength: Tokens.Space.xs)
-
-                    CircleBtn(icon: "message.fill", size: 42, variant: .surface, action: onChat)
-                    CircleBtn(icon: "location.fill", size: 42, variant: .tonal, action: onTrack)
+                ViewThatFits(in: .horizontal) {
+                    footerRow
+                    compactFooter
                 }
             }
+        }
+    }
+
+    private var footerRow: some View {
+        HStack(spacing: Tokens.Space.sm) {
+            summaryPill(icon: "clock.fill", text: booking.homeTimeLabel)
+            summaryPill(icon: "creditcard.fill", text: booking.homePriceLabel)
+
+            Spacer(minLength: Tokens.Space.xs)
+
+            actionButtons
+        }
+    }
+
+    private var compactFooter: some View {
+        VStack(alignment: .leading, spacing: Tokens.Space.sm) {
+            HStack(spacing: Tokens.Space.sm) {
+                summaryPill(icon: "clock.fill", text: booking.homeTimeLabel)
+                summaryPill(icon: "creditcard.fill", text: booking.homePriceLabel)
+            }
+
+            HStack {
+                Spacer()
+                actionButtons
+            }
+        }
+    }
+
+    private var actionButtons: some View {
+        HStack(spacing: Tokens.Space.sm) {
+            CircleBtn(icon: "message.fill", size: 42, variant: .surface, action: onChat)
+            CircleBtn(icon: "location.fill", size: 42, variant: .tonal, action: onTrack)
         }
     }
 
