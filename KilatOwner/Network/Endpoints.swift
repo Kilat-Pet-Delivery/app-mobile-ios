@@ -95,15 +95,30 @@ enum Endpoints {
     }
 
     enum Tracking {
-        static func webSocketURL(baseURL: URL, bookingID: String) -> URL? {
+        static func webSocketURL(
+            baseURL: URL,
+            bookingID: String,
+            accessToken: String? = nil
+        ) -> URL? {
             guard var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
                 return nil
             }
 
-            let currentScheme = components.scheme
-            components.scheme = currentScheme == "https" ? "wss" : "ws"
-            components.path = "/tracking"
-            components.queryItems = [URLQueryItem(name: "booking_id", value: bookingID)]
+            switch components.scheme {
+            case "https":
+                components.scheme = "wss"
+            case "http":
+                components.scheme = "ws"
+            default:
+                break
+            }
+
+            components.path = "/ws/tracking/\(bookingID)"
+            if let accessToken, !accessToken.isEmpty {
+                components.queryItems = [URLQueryItem(name: "token", value: accessToken)]
+            } else {
+                components.queryItems = nil
+            }
             return components.url
         }
     }

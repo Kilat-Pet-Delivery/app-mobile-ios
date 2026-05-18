@@ -123,7 +123,7 @@ final class DTOsCodableTests: XCTestCase {
     }
 
     func testNotificationDTO_JSONRoundTrip() throws {
-        let json = #"{"id":"notif_1","type":"booking.accepted","title":"Runner assigned","body":"Aiman is on the way","createdAt":"2026-05-18T04:35:00Z","readAt":null}"#
+        let json = #"{"id":"notif_1","type":"booking.accepted","title":"Runner assigned","body":"Aiman is on the way","created_at":"2026-05-18T04:35:00Z","read_at":null}"#
 
         try assertRoundTrip(NotificationDTO.self, json: json)
     }

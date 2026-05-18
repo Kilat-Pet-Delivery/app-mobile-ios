@@ -32,12 +32,17 @@ struct NotificationDTO: Codable, Equatable, Identifiable, Sendable {
         case type
         case title
         case body
-        case createdAt
-        case readAt
+        case createdAt = "created_at"
+        case readAt = "read_at"
     }
 }
 
 struct NotificationListDTO: Codable, Equatable, Sendable {
     let items: [NotificationDTO]
     let nextCursor: String
+
+    enum CodingKeys: String, CodingKey {
+        case items
+        case nextCursor = "next_cursor"
+    }
 }
