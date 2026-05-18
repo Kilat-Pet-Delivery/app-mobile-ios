@@ -6,10 +6,11 @@ import XCTest
 func assertAuthSnapshot<V: View>(
     _ view: V,
     named name: String,
+    size: CGSize = CGSize(width: 393, height: 852),
     file: StaticString = #filePath,
     line: UInt = #line
 ) throws {
-    let image = try renderAuthSnapshot(view, file: file, line: line)
+    let image = try renderAuthSnapshot(view, size: size, file: file, line: line)
     let snapshotURL = authSnapshotDirectory(file: file)
         .appendingPathComponent("\(name).png")
 
@@ -37,10 +38,10 @@ func assertAuthSnapshot<V: View>(
 @MainActor
 private func renderAuthSnapshot<V: View>(
     _ view: V,
+    size: CGSize,
     file: StaticString,
     line: UInt
 ) throws -> UIImage {
-    let size = CGSize(width: 393, height: 852)
     let frame = CGRect(origin: .zero, size: size)
     let controller = UIHostingController(
         rootView: view
