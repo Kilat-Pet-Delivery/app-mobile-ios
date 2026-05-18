@@ -44,6 +44,14 @@ enum Endpoints {
             path: "/api/v1/bookings",
             queryItems: [URLQueryItem(name: "status", value: "active")]
         )
+        static let recent = APIEndpoint(
+            method: .get,
+            path: "/api/v1/bookings",
+            queryItems: [
+                URLQueryItem(name: "status", value: "completed"),
+                URLQueryItem(name: "limit", value: "5")
+            ]
+        )
 
         static func detail(id: String) -> APIEndpoint {
             APIEndpoint(method: .get, path: "/api/v1/bookings/\(id)")

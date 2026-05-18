@@ -4,8 +4,28 @@ import Foundation
 final class MockURLProtocol: URLProtocol {
     typealias RequestHandler = (URLRequest) throws -> (HTTPURLResponse, Data?)
 
-    static var requestHandler: RequestHandler?
-    static private(set) var capturedRequests: [URLRequest] = []
+    static var requestHandler: RequestHandler? {
+        get {
+            stateLock.lock()
+            defer { stateLock.unlock() }
+            return _requestHandler
+        }
+        set {
+            stateLock.lock()
+            _requestHandler = newValue
+            stateLock.unlock()
+        }
+    }
+
+    static var capturedRequests: [URLRequest] {
+        stateLock.lock()
+        defer { stateLock.unlock() }
+        return _capturedRequests
+    }
+
+    private static let stateLock = NSLock()
+    private static var _requestHandler: RequestHandler?
+    private static var _capturedRequests: [URLRequest] = []
 
     override class func canInit(with request: URLRequest) -> Bool {
         true
@@ -17,7 +37,7 @@ final class MockURLProtocol: URLProtocol {
 
     override func startLoading() {
         let materializedRequest = Self.materializingBody(of: request)
-        Self.capturedRequests.append(materializedRequest)
+        Self.capture(materializedRequest)
 
         guard let handler = Self.requestHandler else {
             client?.urlProtocol(self, didFailWithError: APIError.network("Missing mock request handler."))
@@ -39,8 +59,16 @@ final class MockURLProtocol: URLProtocol {
     override func stopLoading() {}
 
     static func reset() {
-        requestHandler = nil
-        capturedRequests = []
+        stateLock.lock()
+        _requestHandler = nil
+        _capturedRequests = []
+        stateLock.unlock()
+    }
+
+    private static func capture(_ request: URLRequest) {
+        stateLock.lock()
+        _capturedRequests.append(request)
+        stateLock.unlock()
     }
 
     private static func materializingBody(of request: URLRequest) -> URLRequest {
