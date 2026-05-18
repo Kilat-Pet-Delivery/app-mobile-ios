@@ -11,19 +11,22 @@ struct RegisterRequest: Codable, Equatable, Sendable {
     let fullName: String
     let password: String
     let role: String
+    let firstPet: RegisterPetRequest?
 
     init(
         email: String,
         phone: String,
         fullName: String,
         password: String,
-        role: String = "owner"
+        role: String = "owner",
+        firstPet: RegisterPetRequest? = nil
     ) {
         self.email = email
         self.phone = phone
         self.fullName = fullName
         self.password = password
         self.role = role
+        self.firstPet = firstPet
     }
 
     enum CodingKeys: String, CodingKey {
@@ -32,6 +35,19 @@ struct RegisterRequest: Codable, Equatable, Sendable {
         case fullName = "full_name"
         case password
         case role
+        case firstPet = "first_pet"
+    }
+}
+
+struct RegisterPetRequest: Codable, Equatable, Sendable {
+    let petType: PetType
+    let name: String
+    let weightKg: Double
+
+    enum CodingKeys: String, CodingKey {
+        case petType = "pet_type"
+        case name
+        case weightKg = "weight_kg"
     }
 }
 

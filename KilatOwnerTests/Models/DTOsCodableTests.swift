@@ -17,6 +17,25 @@ final class DTOsCodableTests: XCTestCase {
         try assertRoundTrip(RegisterRequest.self, json: json)
     }
 
+    func testRegisterRequest_withFirstPet_JSONRoundTrip() throws {
+        let json = """
+        {
+          "email": "mei.ling@example.com",
+          "phone": "+60123456789",
+          "full_name": "Mei Ling Chen",
+          "password": "password123",
+          "role": "owner",
+          "first_pet": {
+            "pet_type": "cat",
+            "name": "Mochi",
+            "weight_kg": 4.2
+          }
+        }
+        """
+
+        try assertRoundTrip(RegisterRequest.self, json: json)
+    }
+
     func testLoginResponse_JSONRoundTrip() throws {
         let json = """
         {

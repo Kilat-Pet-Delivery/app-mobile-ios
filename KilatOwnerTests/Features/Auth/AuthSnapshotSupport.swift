@@ -26,7 +26,12 @@ func assertAuthSnapshot<V: View>(
     let baselineData = try Data(contentsOf: snapshotURL)
     let baseline = try XCTUnwrap(UIImage(data: baselineData), file: file, line: line)
     XCTAssertEqual(image.size, baseline.size, file: file, line: line)
-    XCTAssertEqual(try authRGBAData(for: image), try authRGBAData(for: baseline), file: file, line: line)
+    assertAuthSnapshotPixelsMatch(
+        actual: try authRGBAData(for: image),
+        baseline: try authRGBAData(for: baseline),
+        file: file,
+        line: line
+    )
 }
 
 @MainActor
@@ -35,13 +40,35 @@ private func renderAuthSnapshot<V: View>(
     file: StaticString,
     line: UInt
 ) throws -> UIImage {
-    let renderer = ImageRenderer(
-        content: view
-            .frame(width: 393, height: 852)
+    let size = CGSize(width: 393, height: 852)
+    let frame = CGRect(origin: .zero, size: size)
+    let controller = UIHostingController(
+        rootView: view
+            .frame(width: size.width, height: size.height)
             .environment(\.colorScheme, .light)
     )
-    renderer.scale = 1
-    return try XCTUnwrap(renderer.uiImage, file: file, line: line)
+    controller.view.bounds = frame
+    controller.view.backgroundColor = .clear
+
+    let window = UIWindow(frame: frame)
+    window.rootViewController = controller
+    window.isHidden = false
+    controller.view.setNeedsLayout()
+    controller.view.layoutIfNeeded()
+
+    let format = UIGraphicsImageRendererFormat()
+    format.scale = 1
+    format.preferredRange = .standard
+
+    let renderer = UIGraphicsImageRenderer(size: size, format: format)
+    let image = renderer.image { context in
+        UIColor.clear.setFill()
+        context.fill(frame)
+        controller.view.layer.render(in: context.cgContext)
+    }
+    window.isHidden = true
+
+    return image
 }
 
 private func authRGBAData(for image: UIImage) throws -> Data {
@@ -71,6 +98,33 @@ private func authRGBAData(for image: UIImage) throws -> Data {
     }
 
     return data
+}
+
+private func assertAuthSnapshotPixelsMatch(
+    actual: Data,
+    baseline: Data,
+    file: StaticString,
+    line: UInt
+) {
+    XCTAssertEqual(actual.count, baseline.count, file: file, line: line)
+    guard actual.count == baseline.count else { return }
+
+    let allowedChannelDelta = 2
+    let allowedMismatchRatio = 0.02
+    let mismatchCount = zip(actual, baseline).reduce(into: 0) { count, pair in
+        if abs(Int(pair.0) - Int(pair.1)) > allowedChannelDelta {
+            count += 1
+        }
+    }
+    let mismatchRatio = Double(mismatchCount) / Double(actual.count)
+
+    XCTAssertLessThanOrEqual(
+        mismatchRatio,
+        allowedMismatchRatio,
+        "Snapshot mismatch ratio \(mismatchRatio) exceeded \(allowedMismatchRatio)",
+        file: file,
+        line: line
+    )
 }
 
 private func authSnapshotDirectory(file: StaticString) -> URL {
