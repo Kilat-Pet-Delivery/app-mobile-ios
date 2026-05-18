@@ -59,7 +59,7 @@ enum RouteResolver {
         case .login:
             LoginView(
                 viewModel: LoginViewModel(
-                    authRepository: authRepository(environment: environment),
+                    authRepository: environment.repositories.authRepository,
                     coordinator: coordinator,
                     onAuthenticated: { response in
                         environment.currentSession.cache(
@@ -72,7 +72,7 @@ enum RouteResolver {
         case .forgotPassword:
             ForgotPasswordView(
                 viewModel: ForgotPasswordViewModel(
-                    authRepository: authRepository(environment: environment),
+                    authRepository: environment.repositories.authRepository,
                     coordinator: coordinator
                 )
             )
@@ -81,7 +81,7 @@ enum RouteResolver {
         case .signup:
             SignupView(
                 viewModel: SignupViewModel(
-                    authRepository: authRepository(environment: environment),
+                    authRepository: environment.repositories.authRepository,
                     coordinator: coordinator,
                     onAuthenticated: { response in
                         environment.currentSession.cache(
@@ -96,7 +96,7 @@ enum RouteResolver {
         case .home:
             HomeView(
                 viewModel: HomeViewModel(
-                    homeRepository: homeRepository(environment: environment),
+                    homeRepository: environment.repositories.homeRepository,
                     coordinator: coordinator,
                     initialSnapshot: environment.useStubs ? SampleData.homeSnapshot : nil
                 )
@@ -104,7 +104,7 @@ enum RouteResolver {
         case .services(let prefilledPetID):
             ServicesView(
                 viewModel: ServicesViewModel(
-                    petRepository: petRepository(environment: environment),
+                    petRepository: environment.repositories.petRepository,
                     coordinator: coordinator,
                     prefilledPetID: prefilledPetID,
                     initialPets: environment.useStubs ? [SampleData.mochiPet, SampleData.baoPet] : nil
@@ -114,8 +114,8 @@ enum RouteResolver {
             BookingDetailView(
                 viewModel: BookingDetailViewModel(
                     bookingID: bookingID,
-                    bookingRepository: bookingRepository(environment: environment),
-                    paymentRepository: paymentRepository(environment: environment),
+                    bookingRepository: environment.repositories.bookingRepository,
+                    paymentRepository: environment.repositories.paymentRepository,
                     coordinator: coordinator,
                     initialBooking: environment.useStubs ? SampleData.activeBooking : nil,
                     initialPayment: environment.useStubs ? SampleData.payment : nil
@@ -126,7 +126,7 @@ enum RouteResolver {
                 viewModel: BookingConfirmedViewModel(
                     bookingID: bookingID,
                     booking: bookingFixture(for: bookingID),
-                    bookingRepository: bookingRepository(environment: environment),
+                    bookingRepository: environment.repositories.bookingRepository,
                     coordinator: coordinator
                 )
             )
@@ -134,7 +134,7 @@ enum RouteResolver {
             CancelReasonSheet(
                 viewModel: CancelReasonViewModel(
                     bookingID: bookingID,
-                    bookingRepository: bookingRepository(environment: environment)
+                    bookingRepository: environment.repositories.bookingRepository
                 ) { _ in
                     coordinator.pop()
                 },
@@ -147,56 +147,20 @@ enum RouteResolver {
                 viewModel: TrackingViewModel(
                     bookingID: bookingID,
                     booking: bookingFixture(for: bookingID),
-                    trackingRepository: trackingRepository(environment: environment),
+                    trackingRepository: environment.repositories.trackingRepository,
                     coordinator: coordinator
                 )
             )
         case .notifications:
             NotificationsView(
                 viewModel: NotificationsViewModel(
-                    notificationRepository: notificationRepository(environment: environment),
+                    notificationRepository: environment.repositories.notificationRepository,
                     coordinator: coordinator
                 )
             )
         case .pushPreview:
             PushNotificationsView()
         }
-    }
-
-    private static func authRepository(environment: AppEnvironment) -> AuthRepository {
-        guard !environment.useStubs else { return StubAuthRepository() }
-        return AuthRepositoryImpl(
-            client: authenticatedClient(environment: environment),
-            tokenStore: environment.tokenStore
-        )
-    }
-
-    private static func homeRepository(environment: AppEnvironment) -> HomeRepository {
-        environment.useStubs ? StubHomeRepository() : HomeRepositoryImpl(client: authenticatedClient(environment: environment))
-    }
-
-    private static func petRepository(environment: AppEnvironment) -> PetRepository {
-        environment.useStubs ? StubPetRepository() : PetRepositoryImpl(client: authenticatedClient(environment: environment))
-    }
-
-    private static func bookingRepository(environment: AppEnvironment) -> BookingRepository {
-        environment.useStubs ? StubBookingRepository() : BookingRepositoryImpl(client: authenticatedClient(environment: environment))
-    }
-
-    private static func paymentRepository(environment: AppEnvironment) -> PaymentRepository {
-        environment.useStubs ? StubPaymentRepository() : PaymentRepositoryImpl(client: authenticatedClient(environment: environment))
-    }
-
-    private static func notificationRepository(environment: AppEnvironment) -> NotificationRepository {
-        environment.useStubs ? StubNotificationRepository() : NotificationRepositoryImpl(client: authenticatedClient(environment: environment))
-    }
-
-    private static func trackingRepository(environment: AppEnvironment) -> TrackingRepository {
-        environment.useStubs ? StubTrackingRepository() : TrackingRepositoryImpl(tokenStore: environment.tokenStore)
-    }
-
-    private static func authenticatedClient(environment: AppEnvironment) -> APIClient {
-        APIClient(tokenStore: environment.tokenStore)
     }
 
     private static func bookingFixture(for bookingID: String) -> BookingDTO {

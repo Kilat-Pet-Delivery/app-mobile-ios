@@ -2,9 +2,39 @@ import Foundation
 import Observation
 
 protocol AuthGateServicing {
+    var requiresStoredToken: Bool { get }
+
     func profile() async throws -> ProfileDTO
     func refreshProfile() async throws -> ProfileDTO
     func logout() async
+}
+
+extension AuthGateServicing {
+    var requiresStoredToken: Bool { true }
+}
+
+struct StubAuthGateService: AuthGateServicing {
+    let requiresStoredToken = false
+
+    private let tokenStore: TokenStore
+
+    init(tokenStore: TokenStore) {
+        self.tokenStore = tokenStore
+    }
+
+    func profile() async throws -> ProfileDTO {
+        try? tokenStore.saveAccessToken("stub-access-token")
+        try? tokenStore.saveRefreshToken("stub-refresh-token")
+        return SampleData.ownerProfile
+    }
+
+    func refreshProfile() async throws -> ProfileDTO {
+        try await profile()
+    }
+
+    func logout() async {
+        tokenStore.clear()
+    }
 }
 
 struct LiveAuthGateService: AuthGateServicing {
@@ -117,7 +147,11 @@ final class AuthGate {
     }
 
     private func resolveAuthRoute() async -> OwnerRoute {
-        guard tokenStore.accessToken() != nil || tokenStore.refreshToken() != nil else {
+        guard
+            !service.requiresStoredToken
+                || tokenStore.accessToken() != nil
+                || tokenStore.refreshToken() != nil
+        else {
             tokenStore.clear()
             session.clear()
             return .login

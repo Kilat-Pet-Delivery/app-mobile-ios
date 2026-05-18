@@ -41,6 +41,22 @@ final class AuthGateTests: XCTestCase {
         XCTAssertEqual(service.refreshProfileCalls, 0)
     }
 
+    func testAuthGate_stubServiceWithoutTokens_routesToHomeAndCachesPersona() async {
+        let tokenStore = InMemoryTokenStore()
+        let session = AppSession()
+        let service = StubAuthGateService(tokenStore: tokenStore)
+        let gate = makeGate(tokenStore: tokenStore, session: session, service: service)
+
+        let route = await gate.resolveInitialRoute()
+
+        XCTAssertEqual(route, .home)
+        XCTAssertEqual(gate.state, .authenticated)
+        XCTAssertEqual(session.profile, SampleData.ownerProfile)
+        XCTAssertEqual(session.accessToken, "stub-access-token")
+        XCTAssertEqual(tokenStore.accessToken(), "stub-access-token")
+        XCTAssertEqual(tokenStore.refreshToken(), "stub-refresh-token")
+    }
+
     func testAuthGate_expiredToken_attemptsRefresh_thenRoutesAccordingly() async {
         let tokenStore = InMemoryTokenStore(accessToken: "old-access", refreshToken: "old-refresh")
         let session = AppSession()
