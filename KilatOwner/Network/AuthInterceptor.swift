@@ -82,11 +82,20 @@ final class AuthInterceptor {
 
 struct RefreshTokenRequest: Encodable {
     let refreshToken: String
+
+    enum CodingKeys: String, CodingKey {
+        case refreshToken = "refresh_token"
+    }
 }
 
 struct AuthTokenPair: Decodable, Equatable {
     let accessToken: String
     let refreshToken: String
+
+    enum CodingKeys: String, CodingKey {
+        case accessToken = "access_token"
+        case refreshToken = "refresh_token"
+    }
 }
 
 private extension NSLock {
