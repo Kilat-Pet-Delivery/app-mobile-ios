@@ -21,8 +21,28 @@ struct BookingDetailView: View {
             .frame(maxWidth: .infinity)
         }
         .background(Tokens.Color.background.ignoresSafeArea())
+        .sheet(isPresented: safariSheetBinding) {
+            if let redirectURL = viewModel.safariURL {
+                PaymentSafariSheet(redirectURL: redirectURL) {
+                    Task {
+                        await viewModel.safariDismissed()
+                    }
+                }
+            }
+        }
         .task {
             await viewModel.loadIfNeeded()
+        }
+    }
+
+    private var safariSheetBinding: Binding<Bool> {
+        Binding {
+            viewModel.safariURL != nil
+        } set: { isPresented in
+            guard !isPresented, viewModel.safariURL != nil else { return }
+            Task {
+                await viewModel.safariDismissed()
+            }
         }
     }
 
