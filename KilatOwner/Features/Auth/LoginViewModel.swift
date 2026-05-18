@@ -13,17 +13,20 @@ final class LoginViewModel {
 
     private let authRepository: AuthRepository
     private let coordinator: RootCoordinator?
+    private let onAuthenticated: (LoginResponse) -> Void
 
     init(
         email: String = "",
         password: String = "",
         authRepository: AuthRepository,
-        coordinator: RootCoordinator? = nil
+        coordinator: RootCoordinator? = nil,
+        onAuthenticated: @escaping (LoginResponse) -> Void = { _ in }
     ) {
         self.email = email
         self.password = password
         self.authRepository = authRepository
         self.coordinator = coordinator
+        self.onAuthenticated = onAuthenticated
         self.isLoading = false
     }
 
@@ -48,6 +51,7 @@ final class LoginViewModel {
         do {
             let response = try await authRepository.login(email: trimmedEmail, password: password)
             authenticatedProfile = response.user
+            onAuthenticated(response)
             coordinator?.popToRoot()
             coordinator?.push(.home)
         } catch {

@@ -224,7 +224,12 @@ private final class FakeTrackingWebSocketTransport: TrackingWebSocketTransport {
     }
 
     func disconnect() {
-        Task { await core.disconnect() }
+        let semaphore = DispatchSemaphore(value: 0)
+        Task {
+            await core.disconnect()
+            semaphore.signal()
+        }
+        semaphore.wait()
     }
 
     func receive() async throws -> Data {

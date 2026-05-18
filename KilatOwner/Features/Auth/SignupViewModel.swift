@@ -19,6 +19,7 @@ final class SignupViewModel {
 
     private let authRepository: AuthRepository
     private let coordinator: RootCoordinator?
+    private let onAuthenticated: (LoginResponse) -> Void
 
     init(
         email: String = "",
@@ -30,7 +31,8 @@ final class SignupViewModel {
         petWeightKg: String = "",
         isPetSectionExpanded: Bool = false,
         authRepository: AuthRepository,
-        coordinator: RootCoordinator? = nil
+        coordinator: RootCoordinator? = nil,
+        onAuthenticated: @escaping (LoginResponse) -> Void = { _ in }
     ) {
         self.email = email
         self.password = password
@@ -42,6 +44,7 @@ final class SignupViewModel {
         self.isPetSectionExpanded = isPetSectionExpanded
         self.authRepository = authRepository
         self.coordinator = coordinator
+        self.onAuthenticated = onAuthenticated
     }
 
     func submit() async {
@@ -56,6 +59,7 @@ final class SignupViewModel {
         do {
             let response = try await authRepository.register(request)
             authenticatedProfile = response.user
+            onAuthenticated(response)
             coordinator?.push(.welcome)
         } catch {
             errorMessage = userMessage(for: error)

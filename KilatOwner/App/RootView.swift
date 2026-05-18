@@ -4,21 +4,20 @@ import KilatUI
 struct RootView: View {
     private let environment: AppEnvironment
     @State private var coordinator: RootCoordinator
+    @State private var authGate: AuthGate
 
     @MainActor
     init(environment: AppEnvironment = .current) {
         self.environment = environment
         _coordinator = State(initialValue: RootCoordinator())
+        _authGate = State(initialValue: AuthGate(environment: environment))
     }
 
     var body: some View {
         @Bindable var coordinator = coordinator
 
         NavigationStack(path: $coordinator.path) {
-            PlaceholderDashboardView(
-                useStubs: environment.useStubs,
-                coordinator: coordinator
-            )
+            launchContent(coordinator: coordinator)
                 .navigationDestination(for: OwnerRoute.self) { route in
                     RouteResolver.view(
                         for: route,
@@ -26,6 +25,22 @@ struct RootView: View {
                         coordinator: coordinator
                     )
                 }
+                .task {
+                    await authGate.start(coordinator: coordinator)
+                }
+        }
+    }
+
+    @ViewBuilder
+    private func launchContent(coordinator: RootCoordinator) -> some View {
+        switch authGate.state {
+        case .idle, .checking:
+            SplashView()
+        case .authenticated, .unauthenticated:
+            PlaceholderDashboardView(
+                useStubs: environment.useStubs,
+                coordinator: coordinator
+            )
         }
     }
 }

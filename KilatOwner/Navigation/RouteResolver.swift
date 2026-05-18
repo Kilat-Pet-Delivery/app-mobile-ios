@@ -60,7 +60,13 @@ enum RouteResolver {
             LoginView(
                 viewModel: LoginViewModel(
                     authRepository: authRepository(environment: environment),
-                    coordinator: coordinator
+                    coordinator: coordinator,
+                    onAuthenticated: { response in
+                        environment.currentSession.cache(
+                            profile: response.user,
+                            accessToken: response.accessToken
+                        )
+                    }
                 )
             )
         case .forgotPassword:
@@ -76,7 +82,13 @@ enum RouteResolver {
             SignupView(
                 viewModel: SignupViewModel(
                     authRepository: authRepository(environment: environment),
-                    coordinator: coordinator
+                    coordinator: coordinator,
+                    onAuthenticated: { response in
+                        environment.currentSession.cache(
+                            profile: response.user,
+                            accessToken: response.accessToken
+                        )
+                    }
                 )
             )
         case .welcome:
@@ -153,36 +165,38 @@ enum RouteResolver {
 
     private static func authRepository(environment: AppEnvironment) -> AuthRepository {
         guard !environment.useStubs else { return StubAuthRepository() }
-        let tokenStore = KeychainStore()
-        return AuthRepositoryImpl(client: APIClient(tokenStore: tokenStore), tokenStore: tokenStore)
+        return AuthRepositoryImpl(
+            client: authenticatedClient(environment: environment),
+            tokenStore: environment.tokenStore
+        )
     }
 
     private static func homeRepository(environment: AppEnvironment) -> HomeRepository {
-        environment.useStubs ? StubHomeRepository() : HomeRepositoryImpl(client: authenticatedClient())
+        environment.useStubs ? StubHomeRepository() : HomeRepositoryImpl(client: authenticatedClient(environment: environment))
     }
 
     private static func petRepository(environment: AppEnvironment) -> PetRepository {
-        environment.useStubs ? StubPetRepository() : PetRepositoryImpl(client: authenticatedClient())
+        environment.useStubs ? StubPetRepository() : PetRepositoryImpl(client: authenticatedClient(environment: environment))
     }
 
     private static func bookingRepository(environment: AppEnvironment) -> BookingRepository {
-        environment.useStubs ? StubBookingRepository() : BookingRepositoryImpl(client: authenticatedClient())
+        environment.useStubs ? StubBookingRepository() : BookingRepositoryImpl(client: authenticatedClient(environment: environment))
     }
 
     private static func paymentRepository(environment: AppEnvironment) -> PaymentRepository {
-        environment.useStubs ? StubPaymentRepository() : PaymentRepositoryImpl(client: authenticatedClient())
+        environment.useStubs ? StubPaymentRepository() : PaymentRepositoryImpl(client: authenticatedClient(environment: environment))
     }
 
     private static func notificationRepository(environment: AppEnvironment) -> NotificationRepository {
-        environment.useStubs ? StubNotificationRepository() : NotificationRepositoryImpl(client: authenticatedClient())
+        environment.useStubs ? StubNotificationRepository() : NotificationRepositoryImpl(client: authenticatedClient(environment: environment))
     }
 
     private static func trackingRepository(environment: AppEnvironment) -> TrackingRepository {
-        environment.useStubs ? StubTrackingRepository() : TrackingRepositoryImpl(tokenStore: KeychainStore())
+        environment.useStubs ? StubTrackingRepository() : TrackingRepositoryImpl(tokenStore: environment.tokenStore)
     }
 
-    private static func authenticatedClient() -> APIClient {
-        APIClient(tokenStore: KeychainStore())
+    private static func authenticatedClient(environment: AppEnvironment) -> APIClient {
+        APIClient(tokenStore: environment.tokenStore)
     }
 
     private static func bookingFixture(for bookingID: String) -> BookingDTO {

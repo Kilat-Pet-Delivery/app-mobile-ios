@@ -33,7 +33,7 @@ final class AuthInterceptor {
         }
     }
 
-    private func refreshTokens() async throws -> AuthTokenPair {
+    func refreshTokens() async throws -> AuthTokenPair {
         let (task, ownedTaskID): (Task<AuthTokenPair, Error>, UUID?) = refreshLock.withLock {
             if let existing = refreshTask {
                 return (existing, nil)
