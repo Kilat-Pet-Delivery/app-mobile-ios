@@ -1,4 +1,5 @@
 import SwiftUI
+import KilatUI
 
 struct RootView: View {
     private let environment: AppEnvironment
@@ -27,6 +28,13 @@ private struct PlaceholderDashboardView: View {
 
     var body: some View {
         VStack(spacing: 16) {
+            HStack {
+                Spacer()
+
+                CircleBtn(icon: "bell", variant: .surface) {}
+            }
+            .frame(maxWidth: 320)
+
             Image(systemName: "pawprint.fill")
                 .font(.system(size: 48, weight: .semibold))
                 .foregroundStyle(.orange)

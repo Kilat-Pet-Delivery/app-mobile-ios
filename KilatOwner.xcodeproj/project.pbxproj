@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B31300000000000000000001 /* KilatUI in Frameworks */ = {isa = PBXBuildFile; productRef = B31300000000000000000003 /* KilatUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		A00000000000000000000017 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -84,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B31300000000000000000001 /* KilatUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +139,9 @@
 				323539C38D79F2CF4045CD47 /* KilatOwner */,
 			);
 			name = KilatOwner;
+			packageProductDependencies = (
+				B31300000000000000000003 /* KilatUI */,
+			);
 			productName = KilatOwner;
 			productReference = A00000000000000000000007 /* KilatOwner.app */;
 			productType = "com.apple.product-type.application";
@@ -187,6 +195,9 @@
 				Base,
 			);
 			mainGroup = A00000000000000000000020;
+			packageReferences = (
+				B31300000000000000000002 /* XCRemoteSwiftPackageReference "lib-ui-ios" */,
+			);
 			productRefGroup = A00000000000000000000029 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -238,6 +249,25 @@
 			targetProxy = A00000000000000000000017 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B31300000000000000000002 /* XCRemoteSwiftPackageReference "lib-ui-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kilat-Pet-Delivery/lib-ui-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B31300000000000000000003 /* KilatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B31300000000000000000002 /* XCRemoteSwiftPackageReference "lib-ui-ios" */;
+			productName = KilatUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A00000000000000000000051 /* Debug */ = {

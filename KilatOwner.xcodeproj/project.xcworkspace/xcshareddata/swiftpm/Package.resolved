@@ -1,0 +1,15 @@
+{
+  "originHash" : "592ddf2283d3aebeeb45a518eec33c58f99a68f88432ca42c09e54e4966052e8",
+  "pins" : [
+    {
+      "identity" : "lib-ui-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kilat-Pet-Delivery/lib-ui-ios",
+      "state" : {
+        "revision" : "349bbbbf353d61da73b4cb7beffc90adc8e48418",
+        "version" : "0.2.0"
+      }
+    }
+  ],
+  "version" : 3
+}
