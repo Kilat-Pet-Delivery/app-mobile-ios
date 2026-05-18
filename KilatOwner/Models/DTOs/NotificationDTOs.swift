@@ -1,6 +1,9 @@
 import Foundation
 
 enum NotificationKind: String, Codable, CaseIterable, Equatable, Sendable {
+    case bookingStatusChanged = "booking_status_changed"
+    case runnerAssigned = "runner_assigned"
+    case chatMessage = "chat_message"
     case bookingAccepted = "booking.accepted"
     case bookingCompleted = "booking.completed"
     case bookingCancelled = "booking.cancelled"
