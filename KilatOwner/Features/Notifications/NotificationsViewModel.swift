@@ -217,22 +217,12 @@ final class NotificationsViewModel {
     }
 
     private func route(for notification: NotificationDTO) {
-        let bookingID = bookingIDResolver(notification)
-
-        switch notification.type {
-        case .runnerAssigned:
-            coordinator?.push(.bookingConfirmed(bookingID: bookingID))
-        case .chatMessage, .trackingUpdated:
-            coordinator?.push(.tracking(bookingID: bookingID))
-        case .bookingStatusChanged,
-             .bookingAccepted,
-             .bookingCompleted,
-             .bookingCancelled,
-             .paymentEscrowHeld,
-             .paymentFailed,
-             .unknown:
-            coordinator?.push(.bookingDetail(bookingID: bookingID))
-        }
+        coordinator?.push(
+            DeepLinkParser.route(
+                for: notification,
+                bookingIDResolver: bookingIDResolver
+            )
+        )
     }
 
     private static func bucketFor(
