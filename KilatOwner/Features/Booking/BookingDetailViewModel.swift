@@ -285,6 +285,17 @@ final class BookingDetailViewModel {
         showsCancelReasonSheet = false
     }
 
+    func makeCancelReasonViewModel() -> CancelReasonViewModel {
+        CancelReasonViewModel(
+            bookingID: bookingID,
+            bookingRepository: bookingRepository
+        ) { [weak self] cancelledBooking in
+            self?.booking = cancelledBooking
+            self?.showsCancelReasonSheet = false
+            self?.errorMessage = nil
+        }
+    }
+
     func trackTapped() {
         coordinator?.push(.tracking(bookingID: bookingID))
     }

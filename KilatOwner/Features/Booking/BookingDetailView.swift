@@ -30,6 +30,16 @@ struct BookingDetailView: View {
                 }
             }
         }
+        .sheet(isPresented: $viewModel.showsCancelReasonSheet) {
+            CancelReasonSheet(
+                viewModel: viewModel.makeCancelReasonViewModel(),
+                onKeepBooking: {
+                    viewModel.dismissCancelSheet()
+                }
+            )
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
+        }
         .task {
             await viewModel.loadIfNeeded()
         }
@@ -193,12 +203,6 @@ struct BookingDetailView: View {
                     SecondaryButton(title: "Cancel booking", icon: "xmark.circle") {
                         viewModel.cancelTapped()
                     }
-                }
-
-                if viewModel.showsCancelReasonSheet {
-                    Text("Choose a cancellation reason to continue.")
-                        .font(Tokens.FontRole.caption)
-                        .foregroundStyle(Tokens.Color.textSecondary)
                 }
             }
         }
