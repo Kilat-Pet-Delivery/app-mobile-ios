@@ -42,7 +42,12 @@ final class MapPlaceholderSnapshotTests: XCTestCase {
         }
 
         guard FileManager.default.fileExists(atPath: snapshotURL.path) else {
-            XCTFail("Missing snapshot baseline: \(snapshotURL.path)", file: file, line: line)
+            try FileManager.default.createDirectory(
+                at: snapshotURL.deletingLastPathComponent(),
+                withIntermediateDirectories: true
+            )
+            try XCTUnwrap(image.pngData(), file: file, line: line).write(to: snapshotURL)
+            XCTFail("Recorded missing snapshot baseline: \(snapshotURL.path)", file: file, line: line)
             return
         }
 

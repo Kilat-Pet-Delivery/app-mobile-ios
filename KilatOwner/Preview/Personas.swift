@@ -4,6 +4,7 @@ struct RunnerPersona: Equatable, Sendable {
     let id: String
     let fullName: String
     let vehicleDescription: String
+    let phoneNumber: String
     let rating: Double
 }
 
@@ -19,6 +20,7 @@ enum Personas {
         id: "00000000-0000-0000-0000-000000000002",
         fullName: "Aiman Rahman",
         vehicleDescription: "Motorbike",
+        phoneNumber: "+60123456788",
         rating: 4.8
     )
 }

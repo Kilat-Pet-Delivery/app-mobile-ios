@@ -50,11 +50,7 @@ struct MapPlaceholder: View {
             drawDropoffPin(at: dropoffPoint, in: &context)
         }
         .background(Palette.background)
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .stroke(Palette.border, lineWidth: 1)
-        )
+        .modifier(MapPlaceholderChrome(mode: mode))
     }
 
     private func drawNeighborhood(in context: inout GraphicsContext, size: CGSize) {
@@ -123,6 +119,24 @@ struct MapPlaceholder: View {
             x: padding + xProgress * max(size.width - (padding * 2), 1),
             y: padding + yProgress * max(size.height - (padding * 2), 1)
         )
+    }
+}
+
+private struct MapPlaceholderChrome: ViewModifier {
+    let mode: MapPlaceholder.Mode
+
+    func body(content: Content) -> some View {
+        switch mode {
+        case .compact:
+            content
+                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .stroke(Palette.border, lineWidth: 1)
+                )
+        case .full:
+            content
+        }
     }
 }
 
